@@ -1,0 +1,40 @@
+{
+  "source": "sources/maps/souvenir_map_10k.jpg",
+  "frame": "local metres, tools/common.py",
+  "panels": {
+    "islands": {
+      "model": "affine",
+      "matrix": [
+        [
+          -0.007665,
+          0.43963,
+          -796.957455
+        ],
+        [
+          0.500177,
+          -0.011584,
+          -1542.724363
+        ]
+      ],
+      "rms_m": 16.69,
+      "n": 11
+    },
+    "havre": {
+      "model": "similarity",
+      "matrix": [
+        [
+          0.011586,
+          0.474972,
+          -993.058167
+        ],
+        [
+          0.474972,
+          -0.011586,
+          -1413.881794
+        ]
+      ],
+      "rms_m": 29.38,
+      "n": 3
+    }
+  }
+}

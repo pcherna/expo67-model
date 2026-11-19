@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+web/node_modules/
+web/dist/
+.DS_Store
+# large regenerable intermediates (rebuild with tools/georef_warp.py)
+data/georef/*_warped.png
+data/osm/reference.png

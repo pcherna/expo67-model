@@ -1,0 +1,213 @@
+{
+  "source": "sources/maps/souvenir_map_10k.jpg",
+  "notes": "Ground control points: pixel position on the 1967 Official Souvenir Map (10200x4563 scan) <-> modern OSM feature. Pixel positions were read by eye from gridded crops (tools/crop_grid.py), typical error +-10 px (~5 m). Building art on the map is drawn slightly oblique, so building GCPs get lower weight than bridge/shore points. 'osm' is resolved by tools/georef_fit.py: centroid = polygon area centroid; local = explicit local metres (see tools/common.py) taken from OSM way endpoints / shoreline intersections noted in 'why'.",
+  "panels": {
+    "islands": "Île Sainte-Hélène + Île Notre-Dame (incl. La Ronde)",
+    "havre": "Cité du Havre (drawn as a separate, displaced panel on the souvenir map)"
+  },
+  "points": [
+    {
+      "id": "biosphere",
+      "panel": "islands",
+      "px": [
+        6297,
+        2705
+      ],
+      "osm": {
+        "centroid": "way/26288030"
+      },
+      "w": 1.0,
+      "why": "US pavilion dome = Biosphère"
+    },
+    {
+      "id": "helene_de_champlain",
+      "panel": "islands",
+      "px": [
+        6611,
+        2673
+      ],
+      "osm": {
+        "centroid": "way/82141843"
+      },
+      "w": 0.5,
+      "why": "Restaurant Hélène-de-Champlain (365)"
+    },
+    {
+      "id": "tour_de_levis",
+      "panel": "islands",
+      "px": [
+        6941,
+        2303
+      ],
+      "osm": {
+        "centroid": "way/433277863"
+      },
+      "w": 0.7,
+      "why": "Tour de Lévis (367), base of drawn tower"
+    },
+    {
+      "id": "fort",
+      "panel": "islands",
+      "px": [
+        7550,
+        1880
+      ],
+      "osm": {
+        "centroid": "way/115813650"
+      },
+      "w": 0.5,
+      "why": "Fort Sainte-Hélène arsenal (503)"
+    },
+    {
+      "id": "poudriere",
+      "panel": "islands",
+      "px": [
+        7260,
+        2280
+      ],
+      "osm": {
+        "centroid": "way/381556755"
+      },
+      "w": 0.5,
+      "why": "La Poudrière (373)"
+    },
+    {
+      "id": "cosmos_sh",
+      "panel": "islands",
+      "px": [
+        6040,
+        2865
+      ],
+      "osm": {
+        "local": [
+          407.8,
+          1450.6
+        ]
+      },
+      "w": 1.0,
+      "why": "Passerelle du Cosmos way/439916153, Ste-Hélène end"
+    },
+    {
+      "id": "cosmos_nd",
+      "panel": "islands",
+      "px": [
+        6040,
+        3295
+      ],
+      "osm": {
+        "local": [
+          613.0,
+          1449.8
+        ]
+      },
+      "w": 1.0,
+      "why": "Passerelle du Cosmos way/439916153, Notre-Dame end"
+    },
+    {
+      "id": "jc_east_shore",
+      "panel": "islands",
+      "px": [
+        7835,
+        2710
+      ],
+      "osm": {
+        "local": [
+          347,
+          2339
+        ]
+      },
+      "w": 1.0,
+      "why": "Jacques-Cartier highway centreline x Ste-Hélène east shore"
+    },
+    {
+      "id": "expo_express_sh",
+      "panel": "islands",
+      "px": [
+        8055,
+        2700
+      ],
+      "osm": {
+        "local": [
+          302.7,
+          2457.6
+        ]
+      },
+      "w": 0.8,
+      "why": "Pont de l'Expo Express way/395390955, Ste-Hélène end"
+    },
+    {
+      "id": "pont_des_iles_nd",
+      "panel": "islands",
+      "px": [
+        4935,
+        3060
+      ],
+      "osm": {
+        "local": [
+          492.1,
+          903.0
+        ]
+      },
+      "w": 0.8,
+      "why": "Pont des Îles way/164863796, Notre-Dame end"
+    },
+    {
+      "id": "france_casino",
+      "panel": "islands",
+      "px": [
+        4400,
+        3647
+      ],
+      "osm": {
+        "centroid": "way/26698931"
+      },
+      "w": 0.5,
+      "why": "France pavilion (425) = Casino de Montréal main building"
+    },
+    {
+      "id": "habitat67",
+      "panel": "havre",
+      "px": [
+        2960,
+        720
+      ],
+      "osm": {
+        "centroid": "way/440195613"
+      },
+      "w": 0.8,
+      "why": "Habitat 67 module stack, centre of drawn complex"
+    },
+    {
+      "id": "concorde_havre_shore",
+      "panel": "havre",
+      "px": [
+        4180,
+        850
+      ],
+      "osm": {
+        "local": [
+          -543.5,
+          526.9
+        ]
+      },
+      "w": 1.0,
+      "why": "Pont de la Concorde way/23027211 centreline x Cité du Havre river shore (OSM relation/3430571)"
+    },
+    {
+      "id": "havre_tip",
+      "panel": "havre",
+      "px": [
+        4800,
+        790
+      ],
+      "osm": {
+        "local": [
+          -562,
+          890
+        ]
+      },
+      "w": 0.7,
+      "why": "Northern tip of Cité du Havre (OSM relation/3430571 shoreline)"
+    }
+  ]
+}

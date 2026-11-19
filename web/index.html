@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Expo 67 Model</title>
+    <style>
+      html, body { margin: 0; height: 100%; background: #87c8dc; overflow: hidden; font: 13px/1.4 system-ui, sans-serif; }
+      #app { position: fixed; inset: 0; }
+      #hud { position: fixed; top: 12px; left: 12px; max-width: 320px; padding: 10px 12px; border-radius: 8px;
+             background: rgba(255,255,255,0.88); color: #1d2a33; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+      #hud h1 { margin: 0 0 4px; font-size: 15px; }
+      #hud p { margin: 4px 0; }
+      #hud label { display: block; margin-top: 4px; cursor: pointer; }
+      #hud select { margin-top: 6px; width: 100%; }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="hud">
+      <h1>Expo 67 — pilot</h1>
+      <p>Georeferenced 1967 souvenir map on a metric ground plane. Drag to orbit, scroll to zoom, right-drag to pan.</p>
+      <p id="georef-info"></p>
+      <label><input type="checkbox" id="toggle-footprints" checked /> Modern footprints of surviving buildings</label>
+      <select id="goto"><option value="">Fly to…</option></select>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
