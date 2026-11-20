@@ -24,8 +24,8 @@ A 3D rendition of the Expo 67 site in Montréal, served in the browser with thre
 | Canada / Katimavik | 406 | souvenir map, corrected locally against the surviving Pavillon du Canada | top 58.5 m square and 31 m high, sourced; base estimated |
 | People Tree | 406 | as Katimavik | 18.3 m, sourced |
 | Habitat 67 | – | modern footprint | module size, 12 storeys and 354 modules sourced; stacking pattern generated (360 modules) |
-| Man the Explorer (3 buildings) | 320 | souvenir map | truncated-tetrahedron system sourced; all sizes estimated |
-| Man the Producer | 440 | souvenir map | as Man the Explorer |
+| Man the Explorer (3 buildings) | 320 | souvenir map | truncated tetrahedra on a hexagonal face, form from 1967 photos and the map drawing; 22 m hexagon edge (about 36 m high) estimated |
+| Man the Producer | 440 | souvenir map | cluster of 2 large and 4 small units, layout estimated from the map |
 
 Every dimension sits in a `DIMS` block at the top of its builder in `web/src/pavilions/`. Each value is marked sourced or estimated. The research behind them is in `docs/research/pavilions.md`.
 

@@ -1,156 +1,190 @@
 // Theme pavilions by Affleck, Desbarats, Dimakopoulos, Lebensold, Sise (map 320 Man the Explorer,
 // map 440 Man the Producer). See docs/research/pavilions.md §6.
-// Sourced: space frames of truncated tetrahedra, weathering (pre-rusted) steel, partly clad in panels.
-// Man the Explorer = three linked elongated-hexagon buildings; Man the Producer = one building in three sections.
-// NOT sourced: every dimension and the cell size. The values below are estimates and are marked.
-//
-// Model: each building is a clad core (stepped hexagonal tiers, inset per storey) wrapped in an exposed
-// frame. The frame is truncated tetrahedra stacked in "hourglass" pairs on a honeycomb. A hex-down cell
-// meets a mirrored cell triangle-to-triangle, so the hexagonal faces form floors every two cells.
+// Sourced: space frames of truncated tetrahedra, partly clad. Man the Explorer = three elongated-hexagon
+// buildings; Man the Producer = one building in three sections.
+// Form, from 1967 photos and the souvenir map's drawing: each unit is a truncated tetrahedron resting on a
+// hexagonal face. Three inclined hexagons rise from alternate edges of the base hexagon, and their top edges
+// meet a flat triangular roof (a lattice skylight on the map). The other three base edges carry the corner
+// triangles, which lean outward and show the dark exposed frame. Hexagons are clad in grey diamond shingle,
+// with six triangular windows around the centre and shingled spokes between them.
+// NOT sourced: every dimension. Unit sizes and Man the Producer's layout are estimates from the map.
 import * as THREE from 'three';
-import { merged } from './common.js';
-import { truncatedTetrahedron } from './tetra.js';
 
 export const DIMS = {
-  cellEdge: 2.0, // m. Not sourced. Gives a storey of 2 × 1.633 × edge ≈ 6.5 m.
-  explorer: { length: 60, width: 40, storeys: 3, inset: 4 }, // m. Estimate from the map (drawn ~78 m) and photos.
-  producerSection: { length: 58, width: 46, storeys: 4, inset: 4 }, // m. Estimate.
-  producerSpacing: 52, // m between section centres along the axis. Estimate from the map (~170 m complex).
+  // Regular truncated tetrahedron: corner and apex cuts at 1/3 of each tetrahedron edge, apex height of a
+  // regular tetrahedron. Matches the photos (hexagon faces about as tall as wide). Shape not measured.
+  cornerCut: 1 / 3,
+  apexCut: 1 / 3,
+  explorerEdge: 22, // m, hexagon edge. Estimate: map 320 draws the front hexagon ~54 m wide; map oversizes up to 1.7×.
+  // Man the Producer, map 440: two large and four small units. Centres (x along the axis, y to its left) and
+  // edges in m, estimated from the map drawing scaled by 1/1.3 for its oversizing.
+  producerUnits: [
+    { x: 38, y: 6, edge: 22 }, { x: -46, y: 17, edge: 22 },
+    { x: -27, y: -6, edge: 10 }, { x: -8, y: -19, edge: 10 }, { x: -10, y: 15, edge: 10 }, { x: 12, y: -13, edge: 10 },
+  ],
 };
 
-const frameMat = new THREE.LineBasicMaterial({ color: 0xc0653f }); // weathering steel, lighter than the panels so the lattice reads
-const cladding = new THREE.MeshStandardMaterial({ color: 0x6b2c22, roughness: 0.9 });
-const windowMat = new THREE.MeshStandardMaterial({ color: 0x2c3a44, roughness: 0.2, metalness: 0.3, side: THREE.DoubleSide });
+// ---------- textures (procedural, no image assets) ----------
+function canvasTexture(w, h, draw) {
+  const c = document.createElement('canvas');
+  c.width = w;
+  c.height = h;
+  draw(c.getContext('2d'), w, h);
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = 4;
+  return t;
+}
 
-// One truncated tetrahedron, rotated so a hexagonal face lies at y = 0 and the opposite triangle on top.
-const CELL = (() => {
-  const { verts, edges } = truncatedTetrahedron(1);
-  // hexagonal faces are normal to (±1,±1,±1) with an odd number of minus signs for this vertex set; find one
-  const cands = [[1, 1, -1], [1, -1, 1], [-1, 1, 1], [-1, -1, -1], [1, 1, 1], [-1, -1, 1], [-1, 1, -1], [1, -1, -1]];
-  let n = null;
-  for (const c of cands) {
-    const v = new THREE.Vector3(...c).normalize();
-    const d = Math.max(...verts.map((p) => p.dot(v)));
-    if (verts.filter((p) => Math.abs(p.dot(v) - d) < 1e-6).length === 6) {
-      n = v;
-      break;
+// Diamond shingles: one diamond per tile.
+const shingleTex = canvasTexture(64, 64, (g, w, h) => {
+  g.fillStyle = '#8a8986';
+  g.fillRect(0, 0, w, h);
+  g.strokeStyle = '#5f5e5b';
+  g.lineWidth = 3;
+  g.beginPath();
+  g.moveTo(0, h / 2); g.lineTo(w / 2, 0); g.lineTo(w, h / 2); g.lineTo(w / 2, h); g.closePath();
+  g.stroke();
+});
+
+// Triangular lattice (the exposed frame seen through the white panels).
+const latticeTex = canvasTexture(64, 110, (g, w, h) => {
+  g.fillStyle = '#ece8dc';
+  g.fillRect(0, 0, w, h);
+  g.strokeStyle = '#3d3d3d';
+  g.lineWidth = 5;
+  g.beginPath();
+  for (const y of [0, h / 2, h]) { g.moveTo(0, y); g.lineTo(w, y); }
+  for (let x = -2 * w; x <= 2 * w; x += w) {
+    g.moveTo(x, h); g.lineTo(x + w, 0);
+    g.moveTo(x, 0); g.lineTo(x + w, h);
+  }
+  g.stroke();
+});
+
+// Dark bay: open frame with light spots, as in the photos.
+const bayTex = canvasTexture(32, 32, (g, w, h) => {
+  g.fillStyle = '#2b2d30';
+  g.fillRect(0, 0, w, h);
+  g.fillStyle = '#9a9a94';
+  g.beginPath();
+  g.moveTo(w / 2, h * 0.3); g.lineTo(w * 0.7, h / 2); g.lineTo(w / 2, h * 0.7); g.lineTo(w * 0.3, h / 2); g.closePath();
+  g.fill();
+});
+
+const cladding = new THREE.MeshStandardMaterial({ color: 0xffffff, map: shingleTex, roughness: 0.9 });
+const panels = new THREE.MeshStandardMaterial({ color: 0xffffff, map: latticeTex, roughness: 0.7 });
+const bays = new THREE.MeshStandardMaterial({ color: 0xffffff, map: bayTex, roughness: 0.8 });
+const TILE = { cladding: 1.6, panels: 3.0, bays: 1.5 }; // metres per texture repeat
+
+// ---------- geometry ----------
+/** Accumulates flat-shaded triangles with planar UVs for one material. */
+class Bucket {
+  constructor(tile) {
+    this.tile = tile;
+    this.p = [];
+    this.n = [];
+    this.uv = [];
+  }
+
+  tri(a, b, c, f) {
+    const cr = new THREE.Vector3().subVectors(b, a).cross(new THREE.Vector3().subVectors(c, a));
+    if (cr.dot(f.n) < 0) [b, c] = [c, b]; // wind counter-clockwise seen from outside
+    for (const v of [a, b, c]) {
+      const d = v.clone().sub(f.o);
+      this.p.push(v.x, v.y, v.z);
+      this.n.push(f.n.x, f.n.y, f.n.z);
+      this.uv.push(d.dot(f.u) / this.tile, d.dot(f.v) / this.tile);
     }
   }
-  const q = new THREE.Quaternion().setFromUnitVectors(n, new THREE.Vector3(0, -1, 0));
-  const vs = verts.map((p) => p.clone().applyQuaternion(q));
-  const ymin = Math.min(...vs.map((p) => p.y));
-  vs.forEach((p) => (p.y -= ymin));
-  const h = Math.max(...vs.map((p) => p.y));
-  const hex = vs.filter((p) => p.y < 1e-6);
-  const phi = Math.atan2(hex[0].z, hex[0].x); // angle of a hexagon corner
-  return { vs, edges, h, phi };
-})();
 
-function hexPlan(length, width) {
-  const a = width / (2 * Math.sqrt(3)); // 120° apex
-  return [
-    new THREE.Vector2(length / 2, 0), new THREE.Vector2(length / 2 - a, width / 2), new THREE.Vector2(-length / 2 + a, width / 2),
-    new THREE.Vector2(-length / 2, 0), new THREE.Vector2(-length / 2 + a, -width / 2), new THREE.Vector2(length / 2 - a, -width / 2),
-  ];
-}
-
-function insideConvex(poly, x, y, margin = 0) {
-  for (let i = 0; i < poly.length; i++) {
-    const a = poly[i];
-    const b = poly[(i + 1) % poly.length];
-    const cross = (b.x - a.x) * (y - a.y) - (b.y - a.y) * (x - a.x);
-    const len = Math.hypot(b.x - a.x, b.y - a.y);
-    if (cross / len < margin) return false; // CCW polygon: inside is left of each edge
+  polygon(pts, f, lift = 0) {
+    const q = pts.map((p) => p.clone().addScaledVector(f.n, lift));
+    for (let i = 1; i < q.length - 1; i++) this.tri(q[0], q[i], q[i + 1], f);
   }
-  return true;
-}
 
-/** One elongated-hexagon building in its own frame (X = long axis). */
-export function hexHall({ length, width, storeys, inset }, edge = DIMS.cellEdge) {
-  const group = new THREE.Group();
-  const cellH = CELL.h * edge;
-  const storeyH = 2 * cellH;
-  const tiers = [];
-  for (let k = 0; k < storeys; k++) tiers.push(hexPlan(length - 2.3 * inset * k, width - 2 * inset * k));
-
-  // Clad core: one extruded hexagon per storey, slightly inside the frame.
-  const windows = [];
-  for (let k = 0; k < storeys; k++) {
-    const core = hexPlan(length - 2.3 * inset * k - 3, width - 2 * inset * k - 3);
-    const g = new THREE.ExtrudeGeometry(new THREE.Shape(core), { depth: storeyH, bevelEnabled: false });
-    g.rotateX(-Math.PI / 2);
-    g.translate(0, k * storeyH, 0);
-    const m = new THREE.Mesh(g, cladding);
+  mesh(material) {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(this.p, 3));
+    g.setAttribute('normal', new THREE.Float32BufferAttribute(this.n, 3));
+    g.setAttribute('uv', new THREE.Float32BufferAttribute(this.uv, 2));
+    const m = new THREE.Mesh(g, material);
     m.castShadow = m.receiveShadow = true;
-    group.add(m);
-    // triangular windows on the long faces of each tier (the map shows them on every face)
-    const tri = new THREE.Shape([new THREE.Vector2(-2.2, 0), new THREE.Vector2(2.2, 0), new THREE.Vector2(0, 3.8)]);
-    const half = core[1].y;
-    for (const side of [1, -1]) {
-      for (let x = core[2].x + 6; x < core[1].x - 4; x += 9) {
-        const tg = new THREE.ShapeGeometry(tri);
-        if (side > 0) tg.rotateY(Math.PI); // face outward on the -Z (left) side
-        tg.translate(x, k * storeyH + 1.2, -side * (half + 0.05));
-        windows.push(tg);
-      }
-    }
+    return m;
   }
-  group.add(merged(windows, windowMat));
+}
 
-  // Exposed frame: honeycomb sites; per storey, a hex-down cell and its mirror. Keep cells near the surface.
-  const s = Math.sqrt(3) * edge; // honeycomb centre spacing
-  const d1 = new THREE.Vector2(Math.cos(CELL.phi + Math.PI / 6), Math.sin(CELL.phi + Math.PI / 6)).multiplyScalar(s);
-  const d2 = new THREE.Vector2(Math.cos(CELL.phi + Math.PI / 2), Math.sin(CELL.phi + Math.PI / 2)).multiplyScalar(s);
-  const R = Math.ceil(Math.max(length, width) / s) + 2;
-  const pos = [];
-  const seen = new Set();
-  const addEdge = (a, b) => {
-    const k1 = `${a.x.toFixed(2)},${a.y.toFixed(2)},${a.z.toFixed(2)}`;
-    const k2 = `${b.x.toFixed(2)},${b.y.toFixed(2)},${b.z.toFixed(2)}`;
-    const key = k1 < k2 ? `${k1}|${k2}` : `${k2}|${k1}`;
-    if (seen.has(key)) return;
-    seen.add(key);
-    pos.push(a.x, a.y, a.z, b.x, b.y, b.z);
-  };
-  for (let k = 0; k < storeys; k++) {
-    const plan = tiers[k];
-    const above = tiers[k + 1];
-    for (let i = -R; i <= R; i++) {
-      for (let j = -R; j <= R; j++) {
-        const cx = i * d1.x + j * d2.x;
-        const cz = i * d1.y + j * d2.y; // frame plan coords: x along axis, "y" = left = -Z
-        if (!insideConvex(plan, cx, cz, edge * 0.2)) continue;
-        // only cells on the skin: near this tier's edge, or exposed on top (not covered by the next tier)
-        const nearEdge = !insideConvex(plan, cx, cz, s * 1.2);
-        const roof = !above || !insideConvex(above, cx, cz, 0);
-        if (!nearEdge && !roof) continue;
-        for (const mirror of [false, true]) {
-          const y0 = k * storeyH;
-          const p = CELL.vs.map((v) => new THREE.Vector3(cx + v.x * edge, mirror ? y0 + storeyH - v.y * edge : y0 + v.y * edge, -(cz + v.z * edge)));
-          for (const [a, b] of CELL.edges) addEdge(p[a], p[b]);
-        }
-      }
+/** Plane frame of a convex face: origin, in-plane axes u, v and the normal pointing away from `inside`. */
+function faceFrame(pts, inside) {
+  const c = pts.reduce((s, p) => s.add(p), new THREE.Vector3()).divideScalar(pts.length);
+  const u = pts[1].clone().sub(pts[0]).normalize();
+  const n = new THREE.Vector3().subVectors(pts[2], pts[1]).cross(new THREE.Vector3().subVectors(pts[0], pts[1])).normalize();
+  if (n.dot(c.clone().sub(inside)) < 0) n.negate();
+  return { o: pts[0], u, v: new THREE.Vector3().crossVectors(n, u), n, c };
+}
+
+/**
+ * Truncated tetrahedron resting on a hexagonal face, in its own frame (X = map axis, ground at y = 0).
+ * Built by cutting a tetrahedron: base triangle C0..C2 on the ground, apex P above the centroid.
+ * One inclined hexagon faces +X (the front face on the map); the corner triangle opposite faces -X.
+ */
+export function truncTet(edge, { cornerCut: f = DIMS.cornerCut, apexCut: g = DIMS.apexCut } = DIMS) {
+  const side = edge / (1 - 2 * f); // tetrahedron edge giving hexagon base edges of `edge`
+  const R = side / Math.sqrt(3);
+  // Corner C_i at angle 180° + 120° i: C0 on -X, so the face opposite it (C1, C2, P) faces +X.
+  const C = [0, 1, 2].map((i) => {
+    const t = Math.PI + (i * 2 * Math.PI) / 3;
+    return new THREE.Vector3(R * Math.cos(t), 0, R * Math.sin(t));
+  });
+  const P = new THREE.Vector3(0, side * Math.sqrt(2 / 3), 0);
+  const along = (a, b, t) => a.clone().lerp(b, t);
+  const top = C.map((c) => along(P, c, g)); // roof triangle
+  const low = C.map((c) => along(c, P, f)); // top corner of each corner triangle
+
+  const inside = new THREE.Vector3(0, P.y * 0.3, 0);
+  const skin = new Bucket(TILE.cladding);
+  const white = new Bucket(TILE.panels);
+  const dark = new Bucket(TILE.bays);
+
+  for (let i = 0; i < 3; i++) {
+    const j = (i + 1) % 3;
+    // Corner triangle at C_i, leaning outward over the base.
+    const k = (i + 2) % 3;
+    const corner = [along(C[i], C[j], f), low[i], along(C[i], C[k], f)];
+    dark.polygon(corner, faceFrame(corner, inside));
+    // Inclined hexagon on the original face (C_i, C_j, P).
+    const hex = [along(C[i], C[j], f), along(C[j], C[i], f), low[j], top[j], top[i], low[i]];
+    const fr = faceFrame(hex, inside);
+    skin.polygon(hex, fr);
+    // Six windows: the hexagon's centre sectors, shrunk about their centroids, leaving shingled spokes.
+    for (let s = 0; s < 6; s++) {
+      const tri = [fr.c, hex[s], hex[(s + 1) % 6]];
+      const m = tri.reduce((a, p) => a.add(p), new THREE.Vector3()).divideScalar(3);
+      white.polygon(tri.map((p) => m.clone().lerp(p, 0.5)), fr, 0.08);
     }
   }
-  const lg = new THREE.BufferGeometry();
-  lg.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-  group.add(new THREE.LineSegments(lg, frameMat));
-  group.userData.frameEdges = pos.length / 6;
+  // Flat roof: lattice skylight.
+  const roof = faceFrame(top, inside);
+  white.polygon(top, roof);
+
+  const group = new THREE.Group();
+  group.add(skin.mesh(cladding), white.mesh(panels), dark.mesh(bays));
+  group.userData.height = top[0].y;
   return group;
 }
 
-export const explorer = (id) => ({ id, build: () => hexHall(DIMS.explorer) });
+export const explorer = (id) => ({ id, build: () => truncTet(DIMS.explorerEdge) });
 
 export const producer = {
   id: 'producer',
   build() {
     const group = new THREE.Group();
-    for (const off of [-1, 0, 1]) {
-      const h = hexHall(DIMS.producerSection);
-      h.position.x = off * DIMS.producerSpacing;
-      group.add(h);
+    for (const u of DIMS.producerUnits) {
+      const t = truncTet(u.edge);
+      t.position.set(u.x, 0, -u.y);
+      group.add(t);
     }
     return group;
   },
 };
-
