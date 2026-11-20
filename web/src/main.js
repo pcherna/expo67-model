@@ -2,6 +2,7 @@
 // World frame: local metres from tools/common.py (MTM8 minus origin). local (x, y) -> three (x, 0, -y).
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { buildPavilion } from './pavilions/index.js';
 
 const WATER = 0x87c8dc;
 const toWorld = (x, y, h = 0) => new THREE.Vector3(x, h, -y);
@@ -64,59 +65,54 @@ async function addMapPanel(name, lift) {
   georefInfo.push(`${name}: ${b.model}, ${b.n_gcps} hand + ${b.n_shore} shore GCPs, held-out error ${b.loocv_m} m`);
 }
 
-// Biosphère as a scale check: Fuller's dome, 76.2 m diameter, 61.5 m high (a 3/4 sphere).
-function buildDome(lm) {
-  const R = 38.1;
-  const H = 61.5;
-  const cy = H - R; // centre height above ground
-  const theta = Math.acos(-cy / R); // polar angle where the sphere meets the ground
-  const geo = new THREE.SphereGeometry(R, 40, 24, 0, Math.PI * 2, 0, theta);
-  const group = new THREE.Group();
-  const shell = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: 0xdfe8ee, transparent: true, opacity: 0.35, roughness: 0.3, side: THREE.DoubleSide }));
-  // Icosahedral frame clipped at ground level (world y = 0) to the same 3/4 sphere.
-  const frame = new THREE.LineSegments(
-    new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(R, 6)),
-    new THREE.LineBasicMaterial({ color: 0x40505a, clippingPlanes: [new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)] }),
-  );
-  renderer.localClippingEnabled = true;
-  shell.castShadow = true;
-  group.add(shell, frame);
-  group.position.copy(toWorld(lm.x, lm.y, cy));
-  scene.add(group);
-}
-
 const footprints = new THREE.Group();
 scene.add(footprints);
+const goto = document.getElementById('goto');
+const places = new Map(); // id -> {x, y, label}, for the fly-to list and ?view=<id>
+
+function addPlace(id, label, x, y) {
+  places.set(id, { x, y, label });
+  const opt = document.createElement('option');
+  opt.value = id;
+  opt.textContent = label;
+  goto.appendChild(opt);
+}
+
+function flyTo(id) {
+  const p = places.get(id);
+  if (!p) return;
+  const t = toWorld(p.x, p.y);
+  controls.target.copy(t);
+  camera.position.copy(t).add(new THREE.Vector3(-170, 110, 140));
+  controls.update();
+}
 
 async function addLandmarks() {
   const lms = await (await fetch('/data/landmarks.json')).json();
-  const mat = new THREE.LineBasicMaterial({ color: 0xd0108a });
-  const goto = document.getElementById('goto');
+  const lineMat = new THREE.LineBasicMaterial({ color: 0xd0108a });
   for (const lm of lms) {
     const pts = lm.footprint.map(([x, y]) => toWorld(x, y, 1.5));
-    footprints.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), mat));
-    const opt = document.createElement('option');
-    opt.value = lm.id;
-    opt.textContent = lm.label;
-    goto.appendChild(opt);
-    if (lm.id === 'biosphere') buildDome(lm);
+    footprints.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), lineMat));
   }
-  goto.addEventListener('change', () => {
-    const lm = lms.find((l) => l.id === goto.value);
-    if (!lm) return;
-    const t = toWorld(lm.x, lm.y);
-    controls.target.copy(t);
-    camera.position.copy(t).add(new THREE.Vector3(-220, 180, 160));
-    controls.update();
-  });
 }
 
+async function addPavilions() {
+  const recs = await (await fetch('/data/pavilions.json')).json();
+  for (const rec of recs) {
+    scene.add(buildPavilion(rec));
+    addPlace(rec.id, `${rec.name}${rec.map_no ? ` (${rec.map_no})` : ''}`, rec.x, rec.y);
+  }
+}
+
+goto.addEventListener('change', () => flyTo(goto.value));
 document.getElementById('toggle-footprints').addEventListener('change', (e) => {
   footprints.visible = e.target.checked;
 });
 
-await Promise.all([addMapPanel('islands', 0), addMapPanel('havre', 0.05), addLandmarks()]);
+await Promise.all([addMapPanel('islands', 0), addMapPanel('havre', 0.05), addLandmarks(), addPavilions()]);
 document.getElementById('georef-info').textContent = georefInfo.join(' · ');
+const view = new URLSearchParams(location.search).get('view');
+if (view) flyTo(view);
 
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;

@@ -1,0 +1,15 @@
+{
+  "notes": "Where each modelled pavilion sits. source=osm: surviving building, position and orientation from its modern OSM footprint. source=map: demolished, centre and long axis read off the 1967 souvenir map (pixels) and pushed through the panel transform. Optional 'anchor' is a nearby surviving building drawn in the same complex: the map->local offset at the anchor (OSM centroid minus transformed map pixel) is applied to this pavilion as a local correction. Dimensions do NOT come from the map (the illustration exaggerates sizes); they live in the web/src/pavilions/*.js builders with their sources.",
+  "pavilions": [
+    {"id": "us", "name": "United States (Biosphère)", "map_no": 358, "panel": "islands", "source": "osm", "osm": "way/26288030"},
+    {"id": "ussr", "name": "USSR", "map_no": 479, "panel": "islands", "source": "map",
+     "centre_px": [6420, 3420], "axis_px": [[6185, 3420], [6655, 3420]],
+     "why": "Building with the swooping roof east of the Cosmos bridge. Long axis along the canal (map x). Glazed front faces map-down = east."},
+    {"id": "france", "name": "France (Casino)", "map_no": 425, "panel": "islands", "source": "osm", "osm": "way/26698931"},
+    {"id": "canada", "name": "Canada (Katimavik)", "map_no": 406, "panel": "islands", "source": "map",
+     "centre_px": [3755, 3268], "axis_px": [[3660, 3268], [3850, 3268]],
+     "anchor": {"px": [3985, 3185], "osm": "way/46866695", "why": "square Canada-pavilion block east of Katimavik = surviving Pavillon du Canada (48 m from affine prediction)"},
+     "why": "Katimavik inverted pyramid. Centre = drawn central circle. Square edges run along map x/y."},
+    {"id": "habitat", "name": "Habitat 67", "map_no": null, "panel": "havre", "source": "osm", "osm": "way/440195613"}
+  ]
+}
