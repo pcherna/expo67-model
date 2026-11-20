@@ -3,6 +3,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { buildGeneric } from './generic.js';
+import { buildTransit } from './transit.js';
 import { buildPavilion } from './pavilions/index.js';
 
 const WATER = 0x87c8dc;
@@ -129,12 +130,25 @@ async function addGeneric() {
   goto.appendChild(grp);
 }
 
+let transit = null;
+async function addTransit() {
+  const lines = await (await fetch('/data/transit.json')).json();
+  transit = buildTransit(lines);
+  scene.add(transit);
+  for (const line of lines) {
+    for (const st of line.stations) {
+      places.set(`st${st.no}`, { x: st.x, y: st.y, label: st.name });
+      catalogue.push({ name: `${line.name} station ${st.name}`, no: st.no, x: st.x, y: st.y, footprint: null, radius: 60, info: 'Station position from the souvenir map; platform size estimated.' });
+    }
+  }
+}
+
 goto.addEventListener('change', () => flyTo(goto.value));
 document.getElementById('toggle-footprints').addEventListener('change', (e) => {
   footprints.visible = e.target.checked;
 });
 
-await Promise.all([addMapPanel('islands', 0), addMapPanel('havre', 0.05), addLandmarks(), addPavilions(), addGeneric()]);
+await Promise.all([addMapPanel('islands', 0), addMapPanel('havre', 0.05), addLandmarks(), addPavilions(), addGeneric(), addTransit()]);
 document.getElementById('georef-info').textContent = georefInfo.join(' · ');
 const view = new URLSearchParams(location.search).get('view');
 if (view) flyTo(view);
@@ -188,6 +202,7 @@ renderer.domElement.addEventListener('pointerup', (e) => {
 let statsShown = false;
 renderer.setAnimationLoop(() => {
   controls.update();
+  transit?.userData.update(performance.now() / 1000);
   renderer.render(scene, camera);
   if (!statsShown) {
     statsShown = true;

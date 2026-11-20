@@ -1,0 +1,16 @@
+{
+ "notes": "Transit centrelines traced from the 1967 souvenir map (source pixels), per panel. Segments are only what the map draws. The Expo Express link along Île Notre-Dame between station 433 and the Expo Express bridge is outside the drawn area and is NOT modelled (gap).",
+ "lines": [
+  {"id": "expo_express", "name": "Expo Express", "colour": "#c8452f", "segments": [
+    {"panel": "havre", "px": [[900,520],[1500,525],[2200,545],[2900,575],[3300,612],[3800,628],[3950,650],[4050,720],[4130,830],[4200,960],[4280,1150]]},
+    {"panel": "islands", "px": [[4320,1260],[4600,1700],[4840,2110],[4900,2250],[4960,2380],[4985,2480],[4975,2700],[4945,2950],[4915,3100],[4905,3300]]},
+    {"panel": "islands", "px": [[7960,3100],[7990,2900],[8020,2650],[8022,2320],[8015,2000],[7990,1950],[7930,1800],[7880,1680],[7800,1640],[7600,1620]]}
+  ],
+  "stations": [
+    {"no": 203, "name": "Place d'Accueil", "panel": "havre", "px": [1000, 522]},
+    {"no": 303, "name": "Place des Nations", "panel": "islands", "px": [4910, 2250]},
+    {"no": 433, "name": "Île Notre-Dame", "panel": "islands", "px": [4905, 3260]},
+    {"no": 513, "name": "La Ronde", "panel": "islands", "px": [8018, 2160]}
+  ]}
+ ]
+}
