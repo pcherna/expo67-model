@@ -32,6 +32,15 @@
 - [x] Low-quality mode for touch devices; relative asset paths; production build verified (3.4 MB)
 - [x] Canals and lagoons as water (transparent map water)
 
+## Step 6: Shapes and heights from 1967 photos and film (pilot, 2026-11-20)
+- [x] Collect sources: 10 Commons photos (CC BY-SA), 6 Internet Archive films, film shot index (docs/pilot/film-shots.json)
+- [x] VGGT on photos and film clips: fails for single buildings. Works for elevated moving shots, for layout only. Weights deleted afterwards.
+- [x] Single-view height tool (tools/pilot/metrology.py), checked on a synthetic scene
+- [x] Netherlands 19 m (module count) and Czechoslovakia 17 m (people as scale) written to data/pavilions/generic.json
+- [ ] Britain: no view with a visible base. Retry with archive photos.
+- [ ] Send the archive requests in docs/archive-requests.md (user)
+- [ ] When archive photos arrive: measure heights pavilion by pavilion, largest pavilions first
+
 ## Domain rules found mid-build
 - The souvenir map has 3 panels. Ste-Hélène and Notre-Dame share one geometry. Cité du Havre is drawn displaced.
 - Building art is slightly oblique, so the drawn roof sits north-west of the true footprint in map terms. Weight building GCPs lower than ground-level ones.
@@ -40,8 +49,14 @@
 - The souvenir map's error is about 20 m per point and is not smooth. More fitting won't fix it. Accuracy has to come from a better source (aerials or blueprint).
 - Map sizes are exaggerated by up to 1.7× (USSR, Katimavik). Take only positions from the map.
 - A surviving building inside the same drawn complex is a better local anchor than the site-wide fit.
+- A height measured from a photo needs the base of the building in view, on the same ground as the reference.
+- Prefer a scale on the building (façade module, storey, door) over people. At pavilion distance a person is 10–20 px, so 1 px is 5–10 % of the height.
+- Film helps 3D only when the camera moves sideways. Static shots, pans from one spot and zooms give nothing.
+- The British pavilion's main block is white. It only looks dark where it is in shadow.
+- Only the 1967 newsreel among the films has a clear licence. Measure from the others, but don't publish their frames.
 
 ## Review
 - Done: steps 1, 3 and 4. Step 2 is blocked by an external server outage and a paywall.
 - Position error for demolished pavilions is 20–35 m. Better sources are the only real fix.
 - Next: the aerials when the server is back, tiled map texture, then the next pavilion batch.
+- Photo pilot (step 6): measuring from photos works where a base is visible. Automatic reconstruction does not. Coverage on the web is thin, so the archive requests are the next real step.

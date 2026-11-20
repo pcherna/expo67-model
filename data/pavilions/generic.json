@@ -11,7 +11,8 @@
     5345,
     2010
    ],
-   "note": "aluminium space-frame cube"
+   "note": "aluminium space-frame cube. Height 19 m measured from a 1967 photo by counting 3 ft lattice modules (docs/pilot); the lower block is about 14.5 m",
+   "h": 19.0
   },
   {
    "no": 311,
@@ -508,7 +509,9 @@
     3235,
     5443,
     3352
-   ]
+   ],
+   "h": 17.0,
+   "note": "height about 17 m (plus or minus 4 m) measured from one 1967 photo, people as scale (docs/pilot)"
   },
   {
    "no": 444,

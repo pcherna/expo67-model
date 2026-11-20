@@ -7,13 +7,14 @@ A 3D rendition of the Expo 67 site in Montréal, served in the browser with thre
 ## Status
 
 - **Georeferencing:** the 1967 souvenir map is warped onto a metric frame. Held-out error is about 22 m on the islands and about 36 m on Cité du Havre (see findings below).
-- **Pavilions:** 127 buildings across the whole site.
+- **Pavilions:** 126 buildings across the whole site, plus 4 Expo Express stations.
   - 10 dedicated procedural models: the pilot five (US, USSR, France, Canada/Katimavik, Habitat 67), the People Tree, and the hexagon theme pavilions (Man the Explorer, Man the Producer).
-  - 117 generic massing models: footprints traced from the souvenir map (or modern OSM for survivors), roof colour sampled from the map, height from sources where found and otherwise from a size class. Special shapes: Germany's Frei Otto tent (8 masts, 14–38 m), Ontario's tent, the Gyrotron pyramid and volcano, and Erickson/Massey's timber hex pyramids (Man in the Community, 140 ft).
+  - 116 generic massing models: footprints traced from the souvenir map (or modern OSM for survivors), roof colour sampled from the map, height from sources where found and otherwise from a size class. Special shapes: Germany's Frei Otto tent (8 masts, 14–38 m), Ontario's tent, the Gyrotron pyramid and volcano, and Erickson/Massey's timber hex pyramids (Man in the Community, 140 ft).
+  - Two heights are measured from 1967 photos: the Netherlands (19 m) and Czechoslovakia (about 17 m). See `docs/pilot/README.md`.
   - Click any building in the viewer to see its name and where its data came from.
 - **Expo Express:** 3.6 km of the line traced from the map, with bridges, piers, four stations and moving trains. The stretch along Île Notre-Dame between station 433 and the Expo Express bridge is outside the drawn map, so it is a gap.
 - **Trees:** about 13,000 trees, placed where the map draws tree crowns, rendered as two instanced meshes.
-- **Better sources:** blocked. See "Known gaps".
+- **Better sources:** blocked. Request drafts for three archives are in `docs/archive-requests.md`.
 
 | Model | Map no. | Position from | Size from |
 |---|---|---|---|
@@ -82,14 +83,24 @@ To add a control point:
 - Automatic shoreline control points (121 of them) come from places where the shore is unchanged since 1967: Sainte-Hélène and Cité du Havre's river side. Notre-Dame was reshaped for 1976, so its modern shore is not used.
 - Local anchors beat the site-wide fit. Examples: Katimavik is corrected against the surviving Pavillon du Canada, and France is placed by the arc of its surviving footprint.
 
+## Photo and film findings
+
+A pilot on four pavilions tested how to get shapes and heights from 1967 photos and film. The full write-up is `docs/pilot/README.md`.
+
+- Automatic 3D reconstruction (VGGT) fails on single buildings. A few still photos from different spots don't fuse, and most film is static, panned from one spot, or cut every few seconds. Only elevated shots from a moving vehicle gave a coherent scene, and that was useful for site layout only.
+- Measuring heights from one photo works when the base of the building is visible. A scale on the building itself beats people as a reference. The Netherlands lattice of 3-foot cubes gave a height by counting modules, and people at that distance gave a figure 30 % too high.
+- Coverage decides what is possible. Britain and the US pavilion were filmed a lot. The Netherlands appears in one 6 s shot, and Czechoslovakia in none that could be confirmed. Wikimedia Commons has 2 to 5 photos per pavilion, so scaling up needs the archives.
+- Britain could not be measured. Terraces, the moat, the Minirail or crowds hide its base in every view found.
+
 ## Known gaps
 
 - **Better sources are blocked.**
   - The City of Montréal's 1966 and 1969 aerial photos (open data, CC BY-NC-SA) list fine, but every image returns HTTP 403 "site en maintenance". Retry later. The 1969 set is the best target, because most pavilions still stood then.
   - The LAC 1967 site blueprint and plans are only on the subscription World's Fairs database (Adam Matthew). An institutional login or a direct LAC reproduction request is needed.
+  - Drafts for LAC, the Archives de Montréal and the CCA are in `docs/archive-requests.md`. None has been sent.
 - **Position accuracy for demolished pavilions is about 20–35 m** until aerials are georeferenced.
 - **Many dimensions are estimates:** all USSR sizes except roof area, all theme-pavilion sizes, Katimavik's base, and France's fins. The research file lists archive sources (CCA fonds, Bellat's book) that would settle them.
-- **Generic massing is rough.** Footprints are traced by eye from an illustration (sizes there can be exaggerated). Most heights are a size class, not a source. Legend matches marked "(?)" in the fly-to list are uncertain.
+- **Generic massing is rough.** Footprints are traced by eye from an illustration (sizes there can be exaggerated). Most heights are a size class, not a source. Photos can replace them one pavilion at a time (see `docs/pilot/README.md`). Legend matches marked "(?)" in the fly-to list are uncertain.
 - **Minirail not modelled.** On this map it is drawn with the same ink weight as road edges, so it can't be traced reliably at junctions. It needs a clearer source, such as the aerials or a route diagram.
 - **Not yet modelled:** La Ronde's rides beyond the Gyrotron, and terrain. Smaller service buildings and kiosks are left out. (Canals and lagoons already show as water, because the map's water is transparent.)
 - **Scene weight:** about 1.2 M triangles per frame including the shadow pass. Fine on desktop. Not yet tested on phones.
