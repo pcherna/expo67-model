@@ -11,6 +11,8 @@ A 3D rendition of the Expo 67 site in Montréal, served in the browser with thre
   - 10 dedicated procedural models: the pilot five (US, USSR, France, Canada/Katimavik, Habitat 67), the People Tree, and the hexagon theme pavilions (Man the Explorer, Man the Producer).
   - 117 generic massing models: footprints traced from the souvenir map (or modern OSM for survivors), roof colour sampled from the map, height from sources where found and otherwise from a size class. Special shapes: Germany's Frei Otto tent (8 masts, 14–38 m), Ontario's tent, the Gyrotron pyramid and volcano, and Erickson/Massey's timber hex pyramids (Man in the Community, 140 ft).
   - Click any building in the viewer to see its name and where its data came from.
+- **Expo Express:** 3.6 km of the line traced from the map, with bridges, piers, four stations and moving trains. The stretch along Île Notre-Dame between station 433 and the Expo Express bridge is outside the drawn map, so it is a gap.
+- **Trees:** about 13,000 trees, placed where the map draws tree crowns, rendered as two instanced meshes.
 - **Better sources:** blocked. See "Known gaps".
 
 | Model | Map no. | Position from | Size from |
@@ -51,6 +53,8 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python tools/export_landmarks.py  # surviving-building footprints for the viewer
 .venv/bin/python tools/export_pavilions.py  # data/pavilions/placements.json -> web/public/data/pavilions.json
 .venv/bin/python tools/export_generic.py    # data/pavilions/generic.json -> web/public/data/generic.json (run after export_pavilions)
+.venv/bin/python tools/export_transit.py    # data/transit/lines.json -> web/public/data/transit.json
+.venv/bin/python tools/export_trees.py      # tree crowns on the warped map -> web/public/data/trees.json (run after export_generic)
 cd web && npm install && npm run dev       # /?view=<id> or /?view=no<map number>, e.g. /?view=ussr, /?view=no454
 ```
 
@@ -76,4 +80,5 @@ To add a control point:
 - **Position accuracy for demolished pavilions is about 20–35 m** until aerials are georeferenced.
 - **Many dimensions are estimates:** all USSR sizes except roof area, all theme-pavilion sizes, Katimavik's base, and France's fins. The research file lists archive sources (CCA fonds, Bellat's book) that would settle them.
 - **Generic massing is rough.** Footprints are traced by eye from an illustration (sizes there can be exaggerated). Most heights are a size class, not a source. Legend matches marked "(?)" in the fly-to list are uncertain.
-- **Not yet modelled:** La Ronde's rides beyond the Gyrotron, the Minirail and Expo Express lines, terrain, and Notre-Dame's canals as water. Smaller service buildings and kiosks are left out.
+- **Not yet modelled:** the Minirail, La Ronde's rides beyond the Gyrotron, and terrain. Smaller service buildings and kiosks are left out. (Canals and lagoons already show as water, because the map's water is transparent.)
+- **Scene weight:** about 1.2 M triangles per frame including the shadow pass. Fine on desktop. Not yet tested on phones.

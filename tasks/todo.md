@@ -26,8 +26,10 @@
 - [x] Legend OCR (tesseract) for names; 117 generic footprints traced or taken from OSM
 - [x] Special generic kinds: tent (Germany, Ontario), pyramid/cone (Gyrotron), hex timber pyramid (Man in the Community)
 - [x] Click-to-identify with provenance; ?view=no<number>
-- [ ] Minirail and Expo Express lines
-- [ ] Notre-Dame canals and lagoons as real water
+- [x] Expo Express (3.6 km traced; Notre-Dame link is a gap)
+- [x] Trees from map crowns (13k, instanced)
+- [ ] Minirail
+- [x] Canals and lagoons as water (transparent map water)
 
 ## Domain rules found mid-build
 - The souvenir map has 3 panels. Ste-Hélène and Notre-Dame share one geometry. Cité du Havre is drawn displaced.

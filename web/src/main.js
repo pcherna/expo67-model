@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { buildGeneric } from './generic.js';
 import { buildTransit } from './transit.js';
+import { buildTrees } from './trees.js';
 import { buildPavilion } from './pavilions/index.js';
 
 const WATER = 0x87c8dc;
@@ -130,6 +131,12 @@ async function addGeneric() {
   goto.appendChild(grp);
 }
 
+const treeGroup = new THREE.Group();
+scene.add(treeGroup);
+async function addTrees() {
+  treeGroup.add(buildTrees(await (await fetch('/data/trees.json')).json()));
+}
+
 let transit = null;
 async function addTransit() {
   const lines = await (await fetch('/data/transit.json')).json();
@@ -144,11 +151,14 @@ async function addTransit() {
 }
 
 goto.addEventListener('change', () => flyTo(goto.value));
+document.getElementById('toggle-trees').addEventListener('change', (e) => {
+  treeGroup.visible = e.target.checked;
+});
 document.getElementById('toggle-footprints').addEventListener('change', (e) => {
   footprints.visible = e.target.checked;
 });
 
-await Promise.all([addMapPanel('islands', 0), addMapPanel('havre', 0.05), addLandmarks(), addPavilions(), addGeneric(), addTransit()]);
+await Promise.all([addMapPanel('islands', 0), addMapPanel('havre', 0.05), addLandmarks(), addPavilions(), addGeneric(), addTransit(), addTrees()]);
 document.getElementById('georef-info').textContent = georefInfo.join(' · ');
 const view = new URLSearchParams(location.search).get('view');
 if (view) flyTo(view);
@@ -186,7 +196,7 @@ renderer.domElement.addEventListener('pointerup', (e) => {
   if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 4) return; // a drag, not a click
   pointer.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
   raycaster.setFromCamera(pointer, camera);
-  const hit = raycaster.intersectObjects(scene.children, true).find((h) => h.object !== water && h.object.type === 'Mesh');
+  const hit = raycaster.intersectObjects(scene.children, true).find((h) => h.object !== water && h.object.type === 'Mesh' && !treeGroup.getObjectById(h.object.id));
   const el = document.getElementById('picked');
   if (!hit) return (el.textContent = '');
   const x = hit.point.x;
