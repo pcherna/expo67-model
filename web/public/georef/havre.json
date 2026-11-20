@@ -1,1 +1,1 @@
-{"xmin": -1100.0, "xmax": 0.0, "ymin": -1300.0, "ymax": 1000.0, "model": "similarity", "rms_m": 29.38, "n_gcps": 3}
+{"xmin": -1100.0, "xmax": 0.0, "ymin": -1300.0, "ymax": 1000.0, "model": "affine", "rms_m": 21.73, "loocv_m": 36.31, "n_gcps": 4, "n_shore": 25}

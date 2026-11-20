@@ -1,213 +1,2164 @@
 {
-  "source": "sources/maps/souvenir_map_10k.jpg",
-  "notes": "Ground control points: pixel position on the 1967 Official Souvenir Map (10200x4563 scan) <-> modern OSM feature. Pixel positions were read by eye from gridded crops (tools/crop_grid.py), typical error +-10 px (~5 m). Building art on the map is drawn slightly oblique, so building GCPs get lower weight than bridge/shore points. 'osm' is resolved by tools/georef_fit.py: centroid = polygon area centroid; local = explicit local metres (see tools/common.py) taken from OSM way endpoints / shoreline intersections noted in 'why'.",
-  "panels": {
-    "islands": "Île Sainte-Hélène + Île Notre-Dame (incl. La Ronde)",
-    "havre": "Cité du Havre (drawn as a separate, displaced panel on the souvenir map)"
+ "source": "sources/maps/souvenir_map_10k.jpg",
+ "notes": "Ground control points: pixel position on the 1967 Official Souvenir Map (10200x4563 scan) <-> modern OSM feature. Pixel positions were read by eye from gridded crops (tools/crop_grid.py), typical error +-10 px (~5 m). Building art on the map is drawn slightly oblique, so building GCPs get lower weight than bridge/shore points. 'osm' is resolved by tools/georef_fit.py: centroid = polygon area centroid; local = explicit local metres (see tools/common.py) taken from OSM way endpoints / shoreline intersections noted in 'why'.",
+ "panels": {
+  "islands": "Île Sainte-Hélène + Île Notre-Dame (incl. La Ronde)",
+  "havre": "Cité du Havre (drawn as a separate, displaced panel on the souvenir map)"
+ },
+ "points": [
+  {
+   "id": "biosphere",
+   "panel": "islands",
+   "px": [
+    6297,
+    2705
+   ],
+   "osm": {
+    "centroid": "way/26288030"
+   },
+   "w": 1.0,
+   "why": "US pavilion dome = Biosphère"
   },
-  "points": [
-    {
-      "id": "biosphere",
-      "panel": "islands",
-      "px": [
-        6297,
-        2705
-      ],
-      "osm": {
-        "centroid": "way/26288030"
-      },
-      "w": 1.0,
-      "why": "US pavilion dome = Biosphère"
-    },
-    {
-      "id": "helene_de_champlain",
-      "panel": "islands",
-      "px": [
-        6611,
-        2673
-      ],
-      "osm": {
-        "centroid": "way/82141843"
-      },
-      "w": 0.5,
-      "why": "Restaurant Hélène-de-Champlain (365)"
-    },
-    {
-      "id": "tour_de_levis",
-      "panel": "islands",
-      "px": [
-        6941,
-        2303
-      ],
-      "osm": {
-        "centroid": "way/433277863"
-      },
-      "w": 0.7,
-      "why": "Tour de Lévis (367), base of drawn tower"
-    },
-    {
-      "id": "fort",
-      "panel": "islands",
-      "px": [
-        7550,
-        1880
-      ],
-      "osm": {
-        "centroid": "way/115813650"
-      },
-      "w": 0.5,
-      "why": "Fort Sainte-Hélène arsenal (503)"
-    },
-    {
-      "id": "poudriere",
-      "panel": "islands",
-      "px": [
-        7260,
-        2280
-      ],
-      "osm": {
-        "centroid": "way/381556755"
-      },
-      "w": 0.5,
-      "why": "La Poudrière (373)"
-    },
-    {
-      "id": "cosmos_sh",
-      "panel": "islands",
-      "px": [
-        6040,
-        2865
-      ],
-      "osm": {
-        "local": [
-          407.8,
-          1450.6
-        ]
-      },
-      "w": 1.0,
-      "why": "Passerelle du Cosmos way/439916153, Ste-Hélène end"
-    },
-    {
-      "id": "cosmos_nd",
-      "panel": "islands",
-      "px": [
-        6040,
-        3295
-      ],
-      "osm": {
-        "local": [
-          613.0,
-          1449.8
-        ]
-      },
-      "w": 1.0,
-      "why": "Passerelle du Cosmos way/439916153, Notre-Dame end"
-    },
-    {
-      "id": "jc_east_shore",
-      "panel": "islands",
-      "px": [
-        7835,
-        2710
-      ],
-      "osm": {
-        "local": [
-          347,
-          2339
-        ]
-      },
-      "w": 1.0,
-      "why": "Jacques-Cartier highway centreline x Ste-Hélène east shore"
-    },
-    {
-      "id": "expo_express_sh",
-      "panel": "islands",
-      "px": [
-        8055,
-        2700
-      ],
-      "osm": {
-        "local": [
-          302.7,
-          2457.6
-        ]
-      },
-      "w": 0.8,
-      "why": "Pont de l'Expo Express way/395390955, Ste-Hélène end"
-    },
-    {
-      "id": "pont_des_iles_nd",
-      "panel": "islands",
-      "px": [
-        4935,
-        3060
-      ],
-      "osm": {
-        "local": [
-          492.1,
-          903.0
-        ]
-      },
-      "w": 0.8,
-      "why": "Pont des Îles way/164863796, Notre-Dame end"
-    },
-    {
-      "id": "france_casino",
-      "panel": "islands",
-      "px": [
-        4400,
-        3647
-      ],
-      "osm": {
-        "centroid": "way/26698931"
-      },
-      "w": 0.5,
-      "why": "France pavilion (425) = Casino de Montréal main building"
-    },
-    {
-      "id": "habitat67",
-      "panel": "havre",
-      "px": [
-        2960,
-        720
-      ],
-      "osm": {
-        "centroid": "way/440195613"
-      },
-      "w": 0.8,
-      "why": "Habitat 67 module stack, centre of drawn complex"
-    },
-    {
-      "id": "concorde_havre_shore",
-      "panel": "havre",
-      "px": [
-        4180,
-        850
-      ],
-      "osm": {
-        "local": [
-          -543.5,
-          526.9
-        ]
-      },
-      "w": 1.0,
-      "why": "Pont de la Concorde way/23027211 centreline x Cité du Havre river shore (OSM relation/3430571)"
-    },
-    {
-      "id": "havre_tip",
-      "panel": "havre",
-      "px": [
-        4800,
-        790
-      ],
-      "osm": {
-        "local": [
-          -562,
-          890
-        ]
-      },
-      "w": 0.7,
-      "why": "Northern tip of Cité du Havre (OSM relation/3430571 shoreline)"
-    }
-  ]
+  {
+   "id": "helene_de_champlain",
+   "panel": "islands",
+   "px": [
+    6611,
+    2673
+   ],
+   "osm": {
+    "centroid": "way/82141843"
+   },
+   "w": 0.5,
+   "why": "Restaurant Hélène-de-Champlain (365)"
+  },
+  {
+   "id": "tour_de_levis",
+   "panel": "islands",
+   "px": [
+    6941,
+    2303
+   ],
+   "osm": {
+    "centroid": "way/433277863"
+   },
+   "w": 0.7,
+   "why": "Tour de Lévis (367), base of drawn tower"
+  },
+  {
+   "id": "fort",
+   "panel": "islands",
+   "px": [
+    7550,
+    1880
+   ],
+   "osm": {
+    "centroid": "way/115813650"
+   },
+   "w": 0.5,
+   "why": "Fort Sainte-Hélène arsenal (503)"
+  },
+  {
+   "id": "poudriere",
+   "panel": "islands",
+   "px": [
+    7260,
+    2280
+   ],
+   "osm": {
+    "centroid": "way/381556755"
+   },
+   "w": 0.5,
+   "why": "La Poudrière (373)"
+  },
+  {
+   "id": "cosmos_sh",
+   "panel": "islands",
+   "px": [
+    6040,
+    2865
+   ],
+   "osm": {
+    "local": [
+     407.8,
+     1450.6
+    ]
+   },
+   "w": 1.0,
+   "why": "Passerelle du Cosmos way/439916153, Ste-Hélène end"
+  },
+  {
+   "id": "cosmos_nd",
+   "panel": "islands",
+   "px": [
+    6040,
+    3295
+   ],
+   "osm": {
+    "local": [
+     613.0,
+     1449.8
+    ]
+   },
+   "w": 1.0,
+   "why": "Passerelle du Cosmos way/439916153, Notre-Dame end"
+  },
+  {
+   "id": "jc_east_shore",
+   "panel": "islands",
+   "px": [
+    7835,
+    2710
+   ],
+   "osm": {
+    "local": [
+     347,
+     2339
+    ]
+   },
+   "w": 1.0,
+   "why": "Jacques-Cartier highway centreline x Ste-Hélène east shore"
+  },
+  {
+   "id": "expo_express_sh",
+   "panel": "islands",
+   "px": [
+    8055,
+    2700
+   ],
+   "osm": {
+    "local": [
+     302.7,
+     2457.6
+    ]
+   },
+   "w": 0.8,
+   "why": "Pont de l'Expo Express way/395390955, Ste-Hélène end"
+  },
+  {
+   "id": "pont_des_iles_nd",
+   "panel": "islands",
+   "px": [
+    4935,
+    3060
+   ],
+   "osm": {
+    "local": [
+     492.1,
+     903.0
+    ]
+   },
+   "w": 0.8,
+   "why": "Pont des Îles way/164863796, Notre-Dame end"
+  },
+  {
+   "id": "france_casino",
+   "panel": "islands",
+   "px": [
+    4400,
+    3647
+   ],
+   "osm": {
+    "centroid": "way/26698931"
+   },
+   "w": 0.5,
+   "why": "France pavilion (425) = Casino de Montréal main building"
+  },
+  {
+   "id": "habitat67",
+   "panel": "havre",
+   "px": [
+    2960,
+    720
+   ],
+   "osm": {
+    "centroid": "way/440195613"
+   },
+   "w": 0.8,
+   "why": "Habitat 67 module stack, centre of drawn complex"
+  },
+  {
+   "id": "concorde_havre_shore",
+   "panel": "havre",
+   "px": [
+    4180,
+    850
+   ],
+   "osm": {
+    "local": [
+     -543.5,
+     526.9
+    ]
+   },
+   "w": 0.5,
+   "why": "Pont de la Concorde way/23027211 centreline x Cité du Havre river shore (OSM relation/3430571) (map bundle includes Expo Express rails; centreline uncertain)"
+  },
+  {
+   "id": "havre_tip",
+   "panel": "havre",
+   "px": [
+    4800,
+    790
+   ],
+   "osm": {
+    "local": [
+     -562,
+     890
+    ]
+   },
+   "w": 0.7,
+   "why": "Northern tip of Cité du Havre (OSM relation/3430571 shoreline)"
+  },
+  {
+   "id": "expo_admin_port",
+   "panel": "havre",
+   "px": [
+    830,
+    1010
+   ],
+   "osm": {
+    "centroid": "way/47175204"
+   },
+   "w": 0.6,
+   "why": "Expo administration & press building (208), now Port of Montréal building"
+  }
+ ],
+ "auto_shore": [
+  {
+   "id": "shore_islands_00000",
+   "panel": "islands",
+   "px": [
+    4586.7,
+    2288.0
+   ],
+   "osm": {
+    "local": [
+     176.87,
+     712.31
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -13 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00040",
+   "panel": "islands",
+   "px": [
+    4540.7,
+    2420.6
+   ],
+   "osm": {
+    "local": [
+     213.86,
+     726.46
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +32 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00080",
+   "panel": "islands",
+   "px": [
+    4616.5,
+    2551.0
+   ],
+   "osm": {
+    "local": [
+     244.4,
+     751.14
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +47 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00120",
+   "panel": "islands",
+   "px": [
+    4692.2,
+    2584.4
+   ],
+   "osm": {
+    "local": [
+     256.61,
+     789.24
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +49 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00160",
+   "panel": "islands",
+   "px": [
+    4771.9,
+    2602.8
+   ],
+   "osm": {
+    "local": [
+     268.82,
+     827.33
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +44 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00200",
+   "panel": "islands",
+   "px": [
+    4849.8,
+    2627.6
+   ],
+   "osm": {
+    "local": [
+     281.03,
+     865.42
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +42 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00240",
+   "panel": "islands",
+   "px": [
+    4930.3,
+    2650.9
+   ],
+   "osm": {
+    "local": [
+     293.24,
+     903.51
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +39 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00320",
+   "panel": "islands",
+   "px": [
+    5085.8,
+    2687.9
+   ],
+   "osm": {
+    "local": [
+     311.61,
+     981.33
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +36 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00360",
+   "panel": "islands",
+   "px": [
+    5162.2,
+    2707.5
+   ],
+   "osm": {
+    "local": [
+     324.85,
+     1019.07
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +31 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00400",
+   "panel": "islands",
+   "px": [
+    5247.5,
+    2728.4
+   ],
+   "osm": {
+    "local": [
+     337.2,
+     1057.05
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +26 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00440",
+   "panel": "islands",
+   "px": [
+    5327.2,
+    2751.4
+   ],
+   "osm": {
+    "local": [
+     346.49,
+     1095.96
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +26 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00480",
+   "panel": "islands",
+   "px": [
+    5406.4,
+    2769.3
+   ],
+   "osm": {
+    "local": [
+     355.73,
+     1134.88
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +24 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00520",
+   "panel": "islands",
+   "px": [
+    5480.3,
+    2789.9
+   ],
+   "osm": {
+    "local": [
+     368.68,
+     1172.71
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +20 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00560",
+   "panel": "islands",
+   "px": [
+    5565.0,
+    2802.5
+   ],
+   "osm": {
+    "local": [
+     378.79,
+     1211.35
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +14 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00600",
+   "panel": "islands",
+   "px": [
+    5644.3,
+    2819.2
+   ],
+   "osm": {
+    "local": [
+     387.48,
+     1250.39
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +12 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00640",
+   "panel": "islands",
+   "px": [
+    5723.5,
+    2835.5
+   ],
+   "osm": {
+    "local": [
+     396.98,
+     1289.24
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +9 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00680",
+   "panel": "islands",
+   "px": [
+    5803.1,
+    2850.8
+   ],
+   "osm": {
+    "local": [
+     406.01,
+     1328.21
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +6 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00720",
+   "panel": "islands",
+   "px": [
+    5884.0,
+    2863.7
+   ],
+   "osm": {
+    "local": [
+     410.94,
+     1367.87
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +6 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00760",
+   "panel": "islands",
+   "px": [
+    5963.8,
+    2874.0
+   ],
+   "osm": {
+    "local": [
+     415.85,
+     1407.57
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +5 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00800",
+   "panel": "islands",
+   "px": [
+    6043.1,
+    2891.1
+   ],
+   "osm": {
+    "local": [
+     420.77,
+     1447.26
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +7 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00840",
+   "panel": "islands",
+   "px": [
+    6124.3,
+    2885.6
+   ],
+   "osm": {
+    "local": [
+     425.69,
+     1486.96
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -1 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00880",
+   "panel": "islands",
+   "px": [
+    6204.0,
+    2904.5
+   ],
+   "osm": {
+    "local": [
+     435.2,
+     1525.63
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -3 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00920",
+   "panel": "islands",
+   "px": [
+    6279.3,
+    2938.6
+   ],
+   "osm": {
+    "local": [
+     449.62,
+     1562.94
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -3 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_00960",
+   "panel": "islands",
+   "px": [
+    6360.1,
+    2955.8
+   ],
+   "osm": {
+    "local": [
+     464.03,
+     1600.25
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -11 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01000",
+   "panel": "islands",
+   "px": [
+    6430.9,
+    2963.3
+   ],
+   "osm": {
+    "local": [
+     468.49,
+     1639.63
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -12 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01040",
+   "panel": "islands",
+   "px": [
+    6510.7,
+    2957.0
+   ],
+   "osm": {
+    "local": [
+     468.13,
+     1679.63
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -15 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01080",
+   "panel": "islands",
+   "px": [
+    6581.4,
+    2937.7
+   ],
+   "osm": {
+    "local": [
+     459.69,
+     1718.68
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -16 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01120",
+   "panel": "islands",
+   "px": [
+    6658.3,
+    2918.7
+   ],
+   "osm": {
+    "local": [
+     450.7,
+     1757.66
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -16 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01160",
+   "panel": "islands",
+   "px": [
+    6738.1,
+    2909.2
+   ],
+   "osm": {
+    "local": [
+     441.02,
+     1796.47
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -11 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01200",
+   "panel": "islands",
+   "px": [
+    6819.2,
+    2894.5
+   ],
+   "osm": {
+    "local": [
+     435.18,
+     1835.99
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -12 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01240",
+   "panel": "islands",
+   "px": [
+    6898.0,
+    2882.5
+   ],
+   "osm": {
+    "local": [
+     430.31,
+     1875.69
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -13 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01280",
+   "panel": "islands",
+   "px": [
+    6977.2,
+    2872.8
+   ],
+   "osm": {
+    "local": [
+     425.45,
+     1915.4
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -13 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01320",
+   "panel": "islands",
+   "px": [
+    7055.9,
+    2857.0
+   ],
+   "osm": {
+    "local": [
+     420.89,
+     1955.13
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -16 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01360",
+   "panel": "islands",
+   "px": [
+    7134.5,
+    2841.7
+   ],
+   "osm": {
+    "local": [
+     416.56,
+     1994.9
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -19 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01400",
+   "panel": "islands",
+   "px": [
+    7206.8,
+    2832.0
+   ],
+   "osm": {
+    "local": [
+     409.13,
+     2034.03
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -17 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01440",
+   "panel": "islands",
+   "px": [
+    7281.2,
+    2802.9
+   ],
+   "osm": {
+    "local": [
+     397.59,
+     2072.34
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -19 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01480",
+   "panel": "islands",
+   "px": [
+    7354.4,
+    2772.8
+   ],
+   "osm": {
+    "local": [
+     384.58,
+     2110.16
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -20 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01520",
+   "panel": "islands",
+   "px": [
+    7429.3,
+    2744.4
+   ],
+   "osm": {
+    "local": [
+     371.53,
+     2147.97
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -20 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01560",
+   "panel": "islands",
+   "px": [
+    7515.4,
+    2726.0
+   ],
+   "osm": {
+    "local": [
+     362.75,
+     2186.73
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -19 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01600",
+   "panel": "islands",
+   "px": [
+    7594.2,
+    2713.3
+   ],
+   "osm": {
+    "local": [
+     358.55,
+     2226.51
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -21 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01640",
+   "panel": "islands",
+   "px": [
+    7679.3,
+    2708.3
+   ],
+   "osm": {
+    "local": [
+     354.84,
+     2266.31
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -20 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01680",
+   "panel": "islands",
+   "px": [
+    7743.8,
+    2699.4
+   ],
+   "osm": {
+    "local": [
+     353.47,
+     2305.96
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -24 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01760",
+   "panel": "islands",
+   "px": [
+    7912.2,
+    2683.3
+   ],
+   "osm": {
+    "local": [
+     343.0,
+     2385.03
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -21 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01800",
+   "panel": "islands",
+   "px": [
+    7991.4,
+    2672.1
+   ],
+   "osm": {
+    "local": [
+     340.48,
+     2424.95
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -24 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01840",
+   "panel": "islands",
+   "px": [
+    8070.1,
+    2667.4
+   ],
+   "osm": {
+    "local": [
+     338.75,
+     2464.91
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -25 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01880",
+   "panel": "islands",
+   "px": [
+    8150.2,
+    2656.9
+   ],
+   "osm": {
+    "local": [
+     335.55,
+     2504.78
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -27 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01920",
+   "panel": "islands",
+   "px": [
+    8230.1,
+    2654.7
+   ],
+   "osm": {
+    "local": [
+     332.99,
+     2544.69
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -26 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_01960",
+   "panel": "islands",
+   "px": [
+    8310.0,
+    2652.5
+   ],
+   "osm": {
+    "local": [
+     330.43,
+     2584.61
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -25 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_02000",
+   "panel": "islands",
+   "px": [
+    8390.4,
+    2647.0
+   ],
+   "osm": {
+    "local": [
+     328.38,
+     2624.56
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -26 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_02040",
+   "panel": "islands",
+   "px": [
+    8470.1,
+    2641.7
+   ],
+   "osm": {
+    "local": [
+     326.44,
+     2664.51
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -27 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_02080",
+   "panel": "islands",
+   "px": [
+    8550.0,
+    2640.9
+   ],
+   "osm": {
+    "local": [
+     324.5,
+     2704.47
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -26 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_02120",
+   "panel": "islands",
+   "px": [
+    8629.8,
+    2637.9
+   ],
+   "osm": {
+    "local": [
+     322.56,
+     2744.42
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -26 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_02160",
+   "panel": "islands",
+   "px": [
+    8705.4,
+    2633.8
+   ],
+   "osm": {
+    "local": [
+     318.98,
+     2784.23
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -25 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_02200",
+   "panel": "islands",
+   "px": [
+    8790.2,
+    2625.8
+   ],
+   "osm": {
+    "local": [
+     314.06,
+     2823.91
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -24 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_02240",
+   "panel": "islands",
+   "px": [
+    8772.0,
+    2628.2
+   ],
+   "osm": {
+    "local": [
+     310.42,
+     2862.7
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -52 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_02280",
+   "panel": "islands",
+   "px": [
+    8877.7,
+    2612.9
+   ],
+   "osm": {
+    "local": [
+     275.85,
+     2852.35
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +17 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_02360",
+   "panel": "islands",
+   "px": [
+    8920.4,
+    2440.7
+   ],
+   "osm": {
+    "local": [
+     210.83,
+     2898.13
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -8 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_02400",
+   "panel": "islands",
+   "px": [
+    8893.5,
+    2366.0
+   ],
+   "osm": {
+    "local": [
+     172.49,
+     2908.07
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -30 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_02480",
+   "panel": "islands",
+   "px": [
+    9072.7,
+    2283.0
+   ],
+   "osm": {
+    "local": [
+     148.08,
+     2970.27
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -11 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_02520",
+   "panel": "islands",
+   "px": [
+    9140.9,
+    2269.4
+   ],
+   "osm": {
+    "local": [
+     135.95,
+     3007.68
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -7 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_02560",
+   "panel": "islands",
+   "px": [
+    9218.7,
+    2217.2
+   ],
+   "osm": {
+    "local": [
+     102.48,
+     3028.33
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +15 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_02640",
+   "panel": "islands",
+   "px": [
+    9217.4,
+    2025.5
+   ],
+   "osm": {
+    "local": [
+     31.21,
+     3054.14
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -13 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_02680",
+   "panel": "islands",
+   "px": [
+    9293.9,
+    2023.1
+   ],
+   "osm": {
+    "local": [
+     15.29,
+     3083.19
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +6 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_02720",
+   "panel": "islands",
+   "px": [
+    9368.5,
+    2038.2
+   ],
+   "osm": {
+    "local": [
+     29.73,
+     3116.39
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -4 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_02800",
+   "panel": "islands",
+   "px": [
+    9372.7,
+    2239.2
+   ],
+   "osm": {
+    "local": [
+     100.65,
+     3149.88
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +34 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_03840",
+   "panel": "islands",
+   "px": [
+    9409.3,
+    1794.2
+   ],
+   "osm": {
+    "local": [
+     -79.41,
+     3142.34
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +1 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_03880",
+   "panel": "islands",
+   "px": [
+    9335.9,
+    1754.1
+   ],
+   "osm": {
+    "local": [
+     -98.23,
+     3107.05
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -1 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_03920",
+   "panel": "islands",
+   "px": [
+    9259.9,
+    1720.0
+   ],
+   "osm": {
+    "local": [
+     -117.05,
+     3071.75
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -6 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_03960",
+   "panel": "islands",
+   "px": [
+    9187.4,
+    1678.0
+   ],
+   "osm": {
+    "local": [
+     -135.87,
+     3036.46
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -7 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04000",
+   "panel": "islands",
+   "px": [
+    9110.4,
+    1645.9
+   ],
+   "osm": {
+    "local": [
+     -154.69,
+     3001.16
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -13 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04040",
+   "panel": "islands",
+   "px": [
+    9035.3,
+    1614.9
+   ],
+   "osm": {
+    "local": [
+     -172.59,
+     2965.41
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -18 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04080",
+   "panel": "islands",
+   "px": [
+    8961.1,
+    1577.2
+   ],
+   "osm": {
+    "local": [
+     -189.47,
+     2929.14
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -19 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04120",
+   "panel": "islands",
+   "px": [
+    8878.1,
+    1562.1
+   ],
+   "osm": {
+    "local": [
+     -206.35,
+     2892.87
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -31 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04160",
+   "panel": "islands",
+   "px": [
+    8803.9,
+    1537.6
+   ],
+   "osm": {
+    "local": [
+     -225.6,
+     2857.83
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -40 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04200",
+   "panel": "islands",
+   "px": [
+    8716.7,
+    1513.9
+   ],
+   "osm": {
+    "local": [
+     -233.34,
+     2818.72
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -40 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04240",
+   "panel": "islands",
+   "px": [
+    8672.1,
+    1507.6
+   ],
+   "osm": {
+    "local": [
+     -249.35,
+     2782.61
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -49 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04280",
+   "panel": "islands",
+   "px": [
+    8592.4,
+    1494.2
+   ],
+   "osm": {
+    "local": [
+     -253.63,
+     2742.84
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -48 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04320",
+   "panel": "islands",
+   "px": [
+    8508.6,
+    1484.5
+   ],
+   "osm": {
+    "local": [
+     -258.02,
+     2703.08
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -49 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04360",
+   "panel": "islands",
+   "px": [
+    8428.2,
+    1478.7
+   ],
+   "osm": {
+    "local": [
+     -263.91,
+     2663.52
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -53 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04400",
+   "panel": "islands",
+   "px": [
+    8341.8,
+    1468.4
+   ],
+   "osm": {
+    "local": [
+     -275.88,
+     2625.97
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -62 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04480",
+   "panel": "islands",
+   "px": [
+    8214.6,
+    1453.1
+   ],
+   "osm": {
+    "local": [
+     -286.08,
+     2547.13
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -65 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04600",
+   "panel": "islands",
+   "px": [
+    8043.6,
+    1435.6
+   ],
+   "osm": {
+    "local": [
+     -264.08,
+     2445.38
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -41 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04640",
+   "panel": "islands",
+   "px": [
+    7937.4,
+    1464.5
+   ],
+   "osm": {
+    "local": [
+     -252.88,
+     2407.81
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -39 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04680",
+   "panel": "islands",
+   "px": [
+    7848.6,
+    1331.1
+   ],
+   "osm": {
+    "local": [
+     -251.92,
+     2367.83
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +20 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04720",
+   "panel": "islands",
+   "px": [
+    7796.7,
+    1475.8
+   ],
+   "osm": {
+    "local": [
+     -241.54,
+     2330.11
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -35 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04760",
+   "panel": "islands",
+   "px": [
+    7723.0,
+    1519.8
+   ],
+   "osm": {
+    "local": [
+     -231.62,
+     2291.36
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -45 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04800",
+   "panel": "islands",
+   "px": [
+    7633.9,
+    1534.4
+   ],
+   "osm": {
+    "local": [
+     -223.54,
+     2252.26
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -43 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04840",
+   "panel": "islands",
+   "px": [
+    7568.3,
+    1551.6
+   ],
+   "osm": {
+    "local": [
+     -213.34,
+     2213.61
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -42 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04880",
+   "panel": "islands",
+   "px": [
+    7492.3,
+    1574.7
+   ],
+   "osm": {
+    "local": [
+     -202.51,
+     2175.11
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -42 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04920",
+   "panel": "islands",
+   "px": [
+    7408.8,
+    1593.1
+   ],
+   "osm": {
+    "local": [
+     -192.51,
+     2136.4
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -40 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_04960",
+   "panel": "islands",
+   "px": [
+    7311.2,
+    1624.8
+   ],
+   "osm": {
+    "local": [
+     -190.69,
+     2096.66
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -52 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_05000",
+   "panel": "islands",
+   "px": [
+    7294.9,
+    1622.4
+   ],
+   "osm": {
+    "local": [
+     -186.99,
+     2063.42
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -53 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_05040",
+   "panel": "islands",
+   "px": [
+    7170.5,
+    1660.7
+   ],
+   "osm": {
+    "local": [
+     -182.83,
+     2023.79
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -61 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_06360",
+   "panel": "islands",
+   "px": [
+    4732.8,
+    2185.3
+   ],
+   "osm": {
+    "local": [
+     76.48,
+     763.99
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -62 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_06440",
+   "panel": "islands",
+   "px": [
+    4648.9,
+    2237.2
+   ],
+   "osm": {
+    "local": [
+     137.5,
+     716.86
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -42 m vs previous warp"
+  },
+  {
+   "id": "shore_islands_06480",
+   "panel": "islands",
+   "px": [
+    4577.6,
+    2293.7
+   ],
+   "osm": {
+    "local": [
+     176.81,
+     712.31
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset -8 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71080",
+   "panel": "havre",
+   "px": [
+    2741.7,
+    882.3
+   ],
+   "osm": {
+    "local": [
+     -553.2,
+     -122.13
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +11 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71120",
+   "panel": "havre",
+   "px": [
+    2826.0,
+    882.6
+   ],
+   "osm": {
+    "local": [
+     -554.1,
+     -82.14
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +13 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71160",
+   "panel": "havre",
+   "px": [
+    2910.2,
+    880.8
+   ],
+   "osm": {
+    "local": [
+     -555.0,
+     -42.15
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +14 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71200",
+   "panel": "havre",
+   "px": [
+    2992.0,
+    878.5
+   ],
+   "osm": {
+    "local": [
+     -554.12,
+     -2.19
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +13 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71240",
+   "panel": "havre",
+   "px": [
+    3076.2,
+    879.3
+   ],
+   "osm": {
+    "local": [
+     -551.76,
+     37.74
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +12 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71280",
+   "panel": "havre",
+   "px": [
+    3160.4,
+    880.1
+   ],
+   "osm": {
+    "local": [
+     -549.4,
+     77.67
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +11 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71320",
+   "panel": "havre",
+   "px": [
+    3244.9,
+    880.3
+   ],
+   "osm": {
+    "local": [
+     -547.31,
+     117.61
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +10 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71360",
+   "panel": "havre",
+   "px": [
+    3329.2,
+    877.9
+   ],
+   "osm": {
+    "local": [
+     -545.48,
+     157.57
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +8 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71400",
+   "panel": "havre",
+   "px": [
+    3414.5,
+    879.7
+   ],
+   "osm": {
+    "local": [
+     -545.65,
+     197.56
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +10 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71440",
+   "panel": "havre",
+   "px": [
+    3498.4,
+    877.3
+   ],
+   "osm": {
+    "local": [
+     -545.81,
+     237.56
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +10 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71480",
+   "panel": "havre",
+   "px": [
+    3583.2,
+    878.7
+   ],
+   "osm": {
+    "local": [
+     -546.18,
+     277.55
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +12 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71520",
+   "panel": "havre",
+   "px": [
+    3668.2,
+    876.4
+   ],
+   "osm": {
+    "local": [
+     -547.3,
+     317.54
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +13 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71560",
+   "panel": "havre",
+   "px": [
+    3750.8,
+    873.4
+   ],
+   "osm": {
+    "local": [
+     -548.76,
+     357.5
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +14 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71600",
+   "panel": "havre",
+   "px": [
+    3835.0,
+    873.4
+   ],
+   "osm": {
+    "local": [
+     -548.8,
+     397.5
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +15 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71640",
+   "panel": "havre",
+   "px": [
+    3916.3,
+    874.3
+   ],
+   "osm": {
+    "local": [
+     -547.35,
+     437.43
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +15 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71680",
+   "panel": "havre",
+   "px": [
+    4000.6,
+    875.5
+   ],
+   "osm": {
+    "local": [
+     -543.82,
+     477.28
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +13 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71720",
+   "panel": "havre",
+   "px": [
+    4097.8,
+    923.2
+   ],
+   "osm": {
+    "local": [
+     -542.78,
+     517.07
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +36 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71760",
+   "panel": "havre",
+   "px": [
+    4180.3,
+    876.9
+   ],
+   "osm": {
+    "local": [
+     -545.5,
+     556.87
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +18 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71800",
+   "panel": "havre",
+   "px": [
+    4253.9,
+    874.5
+   ],
+   "osm": {
+    "local": [
+     -545.41,
+     596.78
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +17 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71840",
+   "panel": "havre",
+   "px": [
+    4338.5,
+    874.6
+   ],
+   "osm": {
+    "local": [
+     -544.4,
+     636.77
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +17 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71880",
+   "panel": "havre",
+   "px": [
+    4422.2,
+    874.0
+   ],
+   "osm": {
+    "local": [
+     -544.69,
+     676.76
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +18 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71920",
+   "panel": "havre",
+   "px": [
+    4506.1,
+    871.4
+   ],
+   "osm": {
+    "local": [
+     -543.96,
+     716.75
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +17 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_71960",
+   "panel": "havre",
+   "px": [
+    4590.0,
+    876.3
+   ],
+   "osm": {
+    "local": [
+     -542.63,
+     756.73
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +19 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_72000",
+   "panel": "havre",
+   "px": [
+    4674.4,
+    871.5
+   ],
+   "osm": {
+    "local": [
+     -541.94,
+     796.72
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +17 m vs previous warp"
+  },
+  {
+   "id": "shore_havre_72040",
+   "panel": "havre",
+   "px": [
+    4757.6,
+    870.2
+   ],
+   "osm": {
+    "local": [
+     -539.59,
+     836.65
+    ]
+   },
+   "w": 0.25,
+   "why": "auto shoreline match, normal offset +15 m vs previous warp"
+  }
+ ]
 }

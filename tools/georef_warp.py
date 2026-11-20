@@ -15,7 +15,9 @@ import json
 
 import numpy as np
 from PIL import Image, ImageDraw
+from scipy import ndimage
 
+import georef
 from common import DATA, ROOT
 
 Image.MAX_IMAGE_PIXELS = None
@@ -26,13 +28,25 @@ WINDOWS = {  # local-metre extents to render per panel: xmin, xmax, ymin, ymax
 }
 # Source-pixel rectangles that belong to each panel (x0, y0, x1, y1). Islands = everything else.
 HAVRE_BLOCK = (0, 0, 4950, 1150)
+# Panel title boxes and the logo, printed over the water (source pixels, with margin).
+LABEL_BOXES = [
+    (5320, 540, 5720, 700),    # ILE SAINTE-HELENE
+    (8750, 2690, 9000, 2870),  # LA RONDE
+    (1800, 2200, 2180, 2330),  # ILE NOTRE-DAME
+    (2670, 980, 3040, 1110),   # CITE DU HAVRE
+    (8800, 150, 10000, 560),   # expo67 logo
+]
 WEB_MAX = 4096
+GRID = 8  # evaluate the (possibly TPS) inverse transform every GRID output pixels, interpolate between
 WEB_DIR = ROOT / "web" / "public" / "georef"
 
 
 def panel_mask(size, panel):
     m = Image.new("L", size, 0 if panel == "havre" else 255)
-    ImageDraw.Draw(m).rectangle(HAVRE_BLOCK, fill=255 if panel == "havre" else 0)
+    d = ImageDraw.Draw(m)
+    d.rectangle(HAVRE_BLOCK, fill=255 if panel == "havre" else 0)
+    for box in LABEL_BOXES:
+        d.rectangle(box, fill=0)
     return m
 
 
@@ -41,7 +55,7 @@ def main():
     ap.add_argument("--mpp", type=float, default=0.5)
     ap.add_argument("--panel", default=None)
     a = ap.parse_args()
-    tr = json.loads((DATA / "georef" / "transforms.json").read_text())
+    tr, xforms = georef.load()
     src = Image.open(ROOT / tr["source"]).convert("RGB")
     ref = json.loads((DATA / "osm" / "reference.geojson").read_text())["features"]
     WEB_DIR.mkdir(parents=True, exist_ok=True)
@@ -52,16 +66,29 @@ def main():
         xmin, xmax, ymin, ymax = WINDOWS[panel]
         mpp = a.mpp
         W, H = int((xmax - xmin) / mpp), int((ymax - ymin) / mpp)
-        A = np.vstack([np.array(info["matrix"]), [0, 0, 1]])  # source pixel -> local
-        # output pixel (i, j) -> local (xmin + i*mpp, ymax - j*mpp) -> source pixel
-        M = np.linalg.inv(A) @ np.array([[mpp, 0, xmin], [0, -mpp, ymax], [0, 0, 1]])
-        coeffs = tuple(M[:2].ravel())
-        rgba = src.copy()
-        rgba.putalpha(panel_mask(src.size, panel))
-        warped = rgba.transform((W, H), Image.AFFINE, coeffs, resample=Image.BICUBIC, fillcolor=(0, 0, 0, 0))
+        # output pixel (i, j) -> local (xmin + i*mpp, ymax - j*mpp) -> source pixel, on a coarse grid
+        gi = np.arange(0, W + GRID, GRID)
+        gj = np.arange(0, H + GRID, GRID)
+        GI, GJ = np.meshgrid(gi, gj)
+        loc = np.column_stack([xmin + GI.ravel() * mpp, ymax - GJ.ravel() * mpp])
+        spx = xforms[panel].local_to_px(loc)
+        su = spx[:, 0].reshape(GI.shape)
+        sv = spx[:, 1].reshape(GI.shape)
+        # bilinear upsample of the coordinate maps to full output resolution
+        J, I = np.mgrid[0:H, 0:W].astype(np.float32) / GRID
+        U = ndimage.map_coordinates(su, [J, I], order=1)
+        V = ndimage.map_coordinates(sv, [J, I], order=1)
+        rgba = np.dstack([np.asarray(src), np.asarray(panel_mask(src.size, panel))])
+        chans = [ndimage.map_coordinates(rgba[..., c], [V, U], order=1, mode="constant", cval=0) for c in range(4)]
+        warped = Image.fromarray(np.dstack(chans).astype(np.uint8))
+        # Water becomes transparent so the viewer's own water shows through. This also drops the legend text.
+        land = georef.land_mask(warped, min_area=3000, mpp=mpp)
+        land = ndimage.binary_closing(land, iterations=2)
+        warped.putalpha(Image.fromarray((land * 255).astype(np.uint8)))
         warped.save(DATA / "georef" / f"{panel}_warped.png")
 
-        bounds = {"xmin": xmin, "xmax": xmax, "ymin": ymin, "ymax": ymax, "model": info["model"], "rms_m": info["rms_m"], "n_gcps": info["n"]}
+        bounds = {"xmin": xmin, "xmax": xmax, "ymin": ymin, "ymax": ymax, "model": info["model"], "rms_m": info["rms_m"], "loocv_m": info["loocv_m"],
+                  "n_gcps": info["n_manual"], "n_shore": info["n_shore"]}
         s = min(1.0, WEB_MAX / max(W, H))
         web = warped.resize((round(W * s), round(H * s)), Image.LANCZOS) if s < 1 else warped
         web.save(WEB_DIR / f"{panel}.webp", quality=82, method=6)

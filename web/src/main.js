@@ -61,7 +61,7 @@ async function addMapPanel(name, lift) {
   plane.position.copy(toWorld((b.xmin + b.xmax) / 2, (b.ymin + b.ymax) / 2, lift));
   plane.receiveShadow = true;
   scene.add(plane);
-  georefInfo.push(`${name}: ${b.model}, ${b.n_gcps} GCPs, RMS ${b.rms_m} m`);
+  georefInfo.push(`${name}: ${b.model}, ${b.n_gcps} hand + ${b.n_shore} shore GCPs, held-out error ${b.loocv_m} m`);
 }
 
 // Biosphère as a scale check: Fuller's dome, 76.2 m diameter, 61.5 m high (a 3/4 sphere).
