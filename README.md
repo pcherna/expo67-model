@@ -28,6 +28,16 @@ A 3D rendition of the Expo 67 site in Montréal, served in the browser with thre
 
 Every dimension sits in a `DIMS` block at the top of its builder in `web/src/pavilions/`. Each value is marked sourced or estimated. The research behind them is in `docs/research/pavilions.md`.
 
+## Serving it
+
+```sh
+cd web && npm run build      # static site in web/dist (about 3.4 MB)
+```
+
+Upload `web/dist` to any static host (GitHub Pages, Netlify, S3, a plain web server). Asset paths are relative, so it works from a subpath too. Touch devices get a lighter mode automatically (pixel ratio 1, smaller shadow map, no tree shadows). Add `?q=low` or `?q=high` to force a mode.
+
+Attribution required when publishing: souvenir map CC BY 2.5 CA (Compagnie canadienne de l'Exposition internationale de 1967), OpenStreetMap (ODbL). See `sources/SOURCES.md`.
+
 ## Coordinate frame
 
 The frame is NAD83 / MTM zone 8 (EPSG:32188, the City of Montréal's grid), shifted to a local origin at E 302000, N 5040000. Units are metres, +x is east and +y is north. In three.js, local (x, y) becomes (x, 0, −y). See `tools/common.py`.
@@ -80,5 +90,6 @@ To add a control point:
 - **Position accuracy for demolished pavilions is about 20–35 m** until aerials are georeferenced.
 - **Many dimensions are estimates:** all USSR sizes except roof area, all theme-pavilion sizes, Katimavik's base, and France's fins. The research file lists archive sources (CCA fonds, Bellat's book) that would settle them.
 - **Generic massing is rough.** Footprints are traced by eye from an illustration (sizes there can be exaggerated). Most heights are a size class, not a source. Legend matches marked "(?)" in the fly-to list are uncertain.
-- **Not yet modelled:** the Minirail, La Ronde's rides beyond the Gyrotron, and terrain. Smaller service buildings and kiosks are left out. (Canals and lagoons already show as water, because the map's water is transparent.)
+- **Minirail not modelled.** On this map it is drawn with the same ink weight as road edges, so it can't be traced reliably at junctions. It needs a clearer source, such as the aerials or a route diagram.
+- **Not yet modelled:** La Ronde's rides beyond the Gyrotron, and terrain. Smaller service buildings and kiosks are left out. (Canals and lagoons already show as water, because the map's water is transparent.)
 - **Scene weight:** about 1.2 M triangles per frame including the shadow pass. Fine on desktop. Not yet tested on phones.

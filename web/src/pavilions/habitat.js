@@ -92,7 +92,6 @@ export function build(rec) {
   const group = new THREE.Group();
   group.add(merged(concrete, mat.concrete), merged(glazing, mat.glass));
   group.userData.moduleCount = count;
-  console.log(`[habitat] ${count} modules (target ${DIMS.targetModules})`);
   return group;
 }
 

@@ -1,7 +1,7 @@
 // Trees detected from the souvenir map's drawn crowns (tools/export_trees.py), as two instanced meshes.
 import * as THREE from 'three';
 
-export function buildTrees({ trees }) {
+export function buildTrees({ trees }, { shadows = true } = {}) {
   const n = trees.length;
   const crownGeo = new THREE.IcosahedronGeometry(1, 0);
   crownGeo.scale(3.6, 3.2, 3.6);
@@ -23,7 +23,7 @@ export function buildTrees({ trees }) {
     c.setHSL(0.24 + ((i * 0.618) % 1) * 0.07, 0.42, 0.26 + ((i * 0.382) % 1) * 0.1);
     crowns.setColorAt(i, c);
   });
-  crowns.castShadow = true;
+  crowns.castShadow = shadows;
   crowns.receiveShadow = true;
   const g = new THREE.Group();
   g.add(crowns, trunks);

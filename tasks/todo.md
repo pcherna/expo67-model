@@ -28,7 +28,8 @@
 - [x] Click-to-identify with provenance; ?view=no<number>
 - [x] Expo Express (3.6 km traced; Notre-Dame link is a gap)
 - [x] Trees from map crowns (13k, instanced)
-- [ ] Minirail
+- [ ] Minirail: blocked. Ambiguous on the souvenir map; needs aerials or a route diagram.
+- [x] Low-quality mode for touch devices; relative asset paths; production build verified (3.4 MB)
 - [x] Canals and lagoons as water (transparent map water)
 
 ## Domain rules found mid-build

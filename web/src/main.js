@@ -8,10 +8,14 @@ import { buildTrees } from './trees.js';
 import { buildPavilion } from './pavilions/index.js';
 
 const WATER = 0x87c8dc;
+const BASE = import.meta.env.BASE_URL; // data URLs relative to wherever the site is hosted
 const toWorld = (x, y, h = 0) => new THREE.Vector3(x, h, -y);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+// Quality: ?q=low|high overrides; touch devices default to low (pixel ratio 1, smaller shadow map, no tree shadows).
+const qParam = new URLSearchParams(location.search).get('q');
+const LOW = qParam ? qParam === 'low' : window.matchMedia('(pointer: coarse)').matches;
+renderer.setPixelRatio(LOW ? 1 : Math.min(window.devicePixelRatio, 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.shadowMap.enabled = true;
@@ -35,7 +39,7 @@ sun.position.set(-800, 1200, 600); // afternoon sun from the south-west
 sun.target.position.set(300, 0, -1500);
 sun.castShadow = true;
 Object.assign(sun.shadow.camera, { left: -2500, right: 2500, top: 2500, bottom: -2500, near: 10, far: 5000 });
-sun.shadow.mapSize.set(4096, 4096);
+sun.shadow.mapSize.set(LOW ? 2048 : 4096, LOW ? 2048 : 4096);
 scene.add(sun, sun.target);
 
 // River surface below the map planes.
@@ -51,9 +55,9 @@ const loader = new THREE.TextureLoader();
 const georefInfo = [];
 
 async function addMapPanel(name, lift) {
-  const b = await (await fetch(`/georef/${name}.json`)).json();
+  const b = await (await fetch(`${BASE}georef/${name}.json`)).json();
   await Promise.all(b.tiles.map(async (t) => {
-    const tex = await loader.loadAsync(`/georef/${t.file}`);
+    const tex = await loader.loadAsync(`${BASE}georef/${t.file}`);
     tex.colorSpace = THREE.SRGBColorSpace;
     tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
     const plane = new THREE.Mesh(
@@ -92,7 +96,7 @@ function flyTo(id) {
 }
 
 async function addLandmarks() {
-  const lms = await (await fetch('/data/landmarks.json')).json();
+  const lms = await (await fetch(`${BASE}data/landmarks.json`)).json();
   const lineMat = new THREE.LineBasicMaterial({ color: 0xd0108a });
   for (const lm of lms) {
     const pts = lm.footprint.map(([x, y]) => toWorld(x, y, 1.5));
@@ -101,7 +105,7 @@ async function addLandmarks() {
 }
 
 async function addPavilions() {
-  const recs = await (await fetch('/data/pavilions.json')).json();
+  const recs = await (await fetch(`${BASE}data/pavilions.json`)).json();
   for (const rec of recs) {
     scene.add(buildPavilion(rec));
     catalogue.push({ name: rec.name, no: rec.map_no, x: rec.x, y: rec.y, footprint: null, radius: 45, info: `Dedicated model. Position: ${rec.provenance}.` });
@@ -110,7 +114,7 @@ async function addPavilions() {
 }
 
 async function addGeneric() {
-  const list = await (await fetch('/data/generic.json')).json();
+  const list = await (await fetch(`${BASE}data/generic.json`)).json();
   scene.add(buildGeneric(list));
   for (const b of list) {
     catalogue.push({ name: b.name, no: b.no, footprint: b.footprint, info: `Generic massing, ${b.kind === 'tent' ? `tent on masts up to ${Math.max(...b.masts.map((m) => m[2]))} m` : `${b.h} m (${b.kind})`}. Footprint: ${b.source}.${b.uncertain ? ' Legend match uncertain.' : ''}${b.note ? ` ${b.note}.` : ''}` });
@@ -134,12 +138,12 @@ async function addGeneric() {
 const treeGroup = new THREE.Group();
 scene.add(treeGroup);
 async function addTrees() {
-  treeGroup.add(buildTrees(await (await fetch('/data/trees.json')).json()));
+  treeGroup.add(buildTrees(await (await fetch(`${BASE}data/trees.json`)).json(), { shadows: !LOW }));
 }
 
 let transit = null;
 async function addTransit() {
-  const lines = await (await fetch('/data/transit.json')).json();
+  const lines = await (await fetch(`${BASE}data/transit.json`)).json();
   transit = buildTransit(lines);
   scene.add(transit);
   for (const line of lines) {
@@ -217,7 +221,7 @@ renderer.setAnimationLoop(() => {
   if (!statsShown) {
     statsShown = true;
     const { triangles, calls } = renderer.info.render;
-    const msg = `${catalogue.length} buildings · ${(triangles / 1000).toFixed(0)}k triangles · ${calls} draw calls`;
+    const msg = `${LOW ? 'low quality · ' : ''}${catalogue.length} buildings · ${(triangles / 1000).toFixed(0)}k triangles · ${calls} draw calls`;
     document.getElementById('stats').textContent = msg;
     console.log(`[stats] ${msg}`);
   }
