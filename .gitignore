@@ -6,3 +6,12 @@ web/dist/
 # large regenerable intermediates (rebuild with tools/georef_warp.py)
 data/georef/*_warped.png
 data/osm/reference.png
+
+# pilot: downloaded film and extracted frames (sources listed in data/pilot/SOURCES.md)
+data/pilot/film/
+data/pilot/frames/
+data/pilot/vggt/
+data/pilot/recon/
+data/pilot/review/
+data/pilot/photos/*.jpg
+data/pilot/metrology/
