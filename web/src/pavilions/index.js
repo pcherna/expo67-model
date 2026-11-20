@@ -1,9 +1,16 @@
 // Registry of pavilion builders, keyed by the id used in web/public/data/pavilions.json.
 import * as THREE from 'three';
+import canada, { peopleTree } from './canada.js';
+import france from './france.js';
 import habitat from './habitat.js';
+import { explorer, producer } from './theme.js';
 import us from './us.js';
+import ussr from './ussr.js';
 
-const builders = { us, habitat };
+const builders = Object.fromEntries(
+  [us, ussr, france, canada, peopleTree, habitat, explorer('explorer_life'), explorer('explorer_planet'), explorer('explorer_oceans'), producer]
+    .map((b) => [b.id, b]),
+);
 
 /** Build and place one pavilion record. Unknown ids get a translucent marker so placement is visible. */
 export function buildPavilion(rec) {

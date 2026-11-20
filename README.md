@@ -4,10 +4,26 @@ A 3D rendition of the Expo 67 site in Montréal, served in the browser with thre
 
 ![pilot view](docs/pilot-view.png)
 
-## Status: pilot, step 1 done
+## Status
 
-- The 1967 Official Souvenir Map is georeferenced onto a metric ground frame.
-- A three.js viewer shows the warped map, the modern footprints of surviving buildings, and a to-scale Biosphère placeholder.
+- **Georeferencing:** the 1967 souvenir map is warped onto a metric frame. Held-out error is about 22 m on the islands and about 36 m on Cité du Havre (see findings below).
+- **Pavilions:** 10 procedural models are in the viewer.
+  - Pilot five: US, USSR, France, Canada/Katimavik, Habitat 67.
+  - Hexagon (theme) pavilions: Man the Explorer and Man the Producer.
+- **Better sources:** blocked. See "Known gaps".
+
+| Model | Map no. | Position from | Size from |
+|---|---|---|---|
+| US (Biosphère) | 358 | modern footprint | sourced: 76 m diameter, 62 m high; frame depth and platforms estimated |
+| USSR | 479 | souvenir map | roof area sourced (about 9,300 m²); length, width and heights estimated |
+| France (Casino) | 425 | circle fit to the round part of the modern footprint, which agrees with the map within 8 m | round plan from the footprint arc (r = 36 m); storeys and height sourced; fins estimated |
+| Canada / Katimavik | 406 | souvenir map, corrected locally against the surviving Pavillon du Canada | top 58.5 m square and 31 m high, sourced; base estimated |
+| People Tree | 406 | as Katimavik | 18.3 m, sourced |
+| Habitat 67 | – | modern footprint | module size, 12 storeys and 354 modules sourced; stacking pattern generated (360 modules) |
+| Man the Explorer (3 buildings) | 320 | souvenir map | truncated-tetrahedron system sourced; all sizes estimated |
+| Man the Producer | 440 | souvenir map | as Man the Explorer |
+
+Every dimension sits in a `DIMS` block at the top of its builder in `web/src/pavilions/`. Each value is marked sourced or estimated. The research behind them is in `docs/research/pavilions.md`.
 
 ## Coordinate frame
 
@@ -30,8 +46,10 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python tools/osm_reference.py     # OSM -> reference.geojson + reference.png
 .venv/bin/python tools/georef_fit.py        # fit per-panel transforms, print residuals
 .venv/bin/python tools/georef_warp.py --mpp 1.0   # warp panels, write QA overlays + web textures
-.venv/bin/python tools/export_landmarks.py  # surviving-building positions for the viewer
-cd web && npm install && npm run dev
+.venv/bin/python tools/georef_shore_gcps.py # optional: regenerate automatic shoreline GCPs, then refit + rewarp
+.venv/bin/python tools/export_landmarks.py  # surviving-building footprints for the viewer
+.venv/bin/python tools/export_pavilions.py  # data/pavilions/placements.json -> web/public/data/pavilions.json
+cd web && npm install && npm run dev       # open /?view=<id> to jump to a pavilion, e.g. /?view=ussr
 ```
 
 To add a control point:
@@ -42,14 +60,18 @@ To add a control point:
 
 ## Georeferencing findings
 
-- The souvenir map is a near-planimetric illustration at about 2 px/m. Buildings are drawn slightly oblique.
-- The two islands, **Sainte-Hélène and Notre-Dame**, share one consistent geometry. An affine fit from 11 points gives **17 m RMS**. The illustrator stretched the cross-river axis by about 13%.
-- **Cité du Havre** was drawn as a separate, displaced panel and gets its own transform. Its 3-point similarity fit gives **29 m RMS**, which is too few points.
-- Ste-Hélène's modern shoreline matches the 1967 drawing closely. Notre-Dame was reshaped after 1967 by the Olympic basin and the beach, so its modern shore is not a control.
+- The souvenir map is a near-planimetric illustration at about 2 px/m. Buildings are drawn slightly oblique, and sizes are exaggerated by up to 1.7×. Take only positions from the map. Take sizes from published data.
+- **Sainte-Hélène and Notre-Dame** share one geometry. **Cité du Havre** is a separate, displaced panel with its own transform.
+- I tested a thin-plate-spline warp against affine using leave-one-out cross-validation. The spline lost: 23–31 m held-out error against 22 m for affine. The map's error is about 20 m per point and isn't smooth, so no warp can remove it. Better accuracy has to come from a better source.
+- Automatic shoreline control points (121 of them) come from places where the shore is unchanged since 1967: Sainte-Hélène and Cité du Havre's river side. Notre-Dame was reshaped for 1976, so its modern shore is not used.
+- Local anchors beat the site-wide fit. Examples: Katimavik is corrected against the surviving Pavillon du Canada, and France is placed by the arc of its surviving footprint.
 
 ## Known gaps
 
-- The affine error is 15–35 m. That is good enough for the layout, but too coarse to place pavilions. Next step: add 20–30 more control points and switch to a thin-plate-spline (rubber-sheet) warp.
-- The souvenir map is an illustration. Pavilion footprints should be checked against the LAC 1967 blueprint or the 1966–67 aerial photos before modelling.
-- Legend text on the scan shows up as floating text on the water.
-- The terrain is flat. The 1967 shorelines and Notre-Dame's canals and lagoons are not modelled yet.
+- **Better sources are blocked.**
+  - The City of Montréal's 1966 and 1969 aerial photos (open data, CC BY-NC-SA) list fine, but every image returns HTTP 403 "site en maintenance". Retry later. The 1969 set is the best target, because most pavilions still stood then.
+  - The LAC 1967 site blueprint and plans are only on the subscription World's Fairs database (Adam Matthew). An institutional login or a direct LAC reproduction request is needed.
+- **Position accuracy for demolished pavilions is about 20–35 m** until aerials are georeferenced.
+- **Many dimensions are estimates:** all USSR sizes except roof area, all theme-pavilion sizes, Katimavik's base, and France's fins. The research file lists archive sources (CCA fonds, Bellat's book) that would settle them.
+- **Map texture** is 1 m/px, downsampled to 4096 px, so it blurs at close range. Tiling it at 0.5 m/px is the fix.
+- **Not yet modelled:** the remaining ~80 pavilions, La Ronde, the Minirail and Expo Express, terrain, and Notre-Dame's canals as water.

@@ -15,9 +15,9 @@ export const DIMS = {
     { x: 0, storeys: 10 },
     { x: 95, storeys: 12 },
   ],
-  falloffAlong: 9, // m per storey of drop moving along the axis away from a peak
+  falloffAlong: 10, // m per storey of drop moving along the axis away from a peak (tuned: 360 modules, 12 storeys)
   falloffAcross: 4.5, // m per storey of drop moving across the axis away from the spine
-  voidChance: 0.18, // skipped slots = terraces and gaps
+  voidChance: 0.12, // skipped slots = terraces and gaps (tuned with falloffAlong to ~354 modules)
 };
 
 function inside(poly, x, y) {

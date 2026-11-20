@@ -21,6 +21,27 @@ def long_axis_deg(poly):
     return math.degrees(math.atan2(dy, dx)) % 180
 
 
+def circle_fit(coords, r_min=15, r_max=60, tol=0.8, seed=0):
+    """RANSAC circle through polygon vertices: finds the round part of a footprint with later additions."""
+    c = np.asarray(coords)
+
+    def fit(p):
+        A = np.column_stack([2 * p[:, 0], 2 * p[:, 1], np.ones(len(p))])
+        cx, cy, k = np.linalg.lstsq(A, (p**2).sum(1), rcond=None)[0]
+        return cx, cy, np.sqrt(k + cx**2 + cy**2)
+
+    rng = np.random.default_rng(seed)
+    best = None
+    for _ in range(4000):
+        cx, cy, r = fit(c[rng.choice(len(c), 3, replace=False)])
+        if not (r_min < r < r_max):
+            continue
+        inl = np.abs(np.hypot(c[:, 0] - cx, c[:, 1] - cy) - r) < tol
+        if best is None or inl.sum() > best.sum():
+            best = inl
+    return fit(c[best]) + (int(best.sum()),)
+
+
 def main():
     spec = json.loads((DATA / "pavilions" / "placements.json").read_text())
     feats = {f["properties"]["osm"]: f for f in json.loads((DATA / "osm" / "reference.geojson").read_text())["features"]}
@@ -34,6 +55,10 @@ def main():
             rec.update(x=c.x, y=c.y, rot_deg=long_axis_deg(poly),
                        footprint=[[round(x, 2), round(y, 2)] for x, y in poly.exterior.coords],
                        provenance=f"surviving building, OSM {p['osm']}")
+            if p.get("fit") == "circle":
+                cx, cy, r, n = circle_fit(poly.exterior.coords)
+                rec.update(x=cx, y=cy, rot_deg=0.0, fit_radius=round(float(r), 2),
+                           provenance=f"surviving building, centre of circular arc ({n} vertices, r={r:.1f} m) in OSM {p['osm']}")
         else:
             T = xf[p["panel"]]
             c = T.px_to_local([p["centre_px"]])[0]

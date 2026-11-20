@@ -120,7 +120,15 @@ window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
+let statsShown = false;
 renderer.setAnimationLoop(() => {
   controls.update();
   renderer.render(scene, camera);
+  if (!statsShown) {
+    statsShown = true;
+    const { triangles, calls } = renderer.info.render;
+    const msg = `${places.size} models · ${(triangles / 1000).toFixed(0)}k triangles · ${calls} draw calls`;
+    document.getElementById('stats').textContent = msg;
+    console.log(`[stats] ${msg}`);
+  }
 });
