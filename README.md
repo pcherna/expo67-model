@@ -7,9 +7,10 @@ A 3D rendition of the Expo 67 site in Montréal, served in the browser with thre
 ## Status
 
 - **Georeferencing:** the 1967 souvenir map is warped onto a metric frame. Held-out error is about 22 m on the islands and about 36 m on Cité du Havre (see findings below).
-- **Pavilions:** 10 procedural models are in the viewer.
-  - Pilot five: US, USSR, France, Canada/Katimavik, Habitat 67.
-  - Hexagon (theme) pavilions: Man the Explorer and Man the Producer.
+- **Pavilions:** 127 buildings across the whole site.
+  - 10 dedicated procedural models: the pilot five (US, USSR, France, Canada/Katimavik, Habitat 67), the People Tree, and the hexagon theme pavilions (Man the Explorer, Man the Producer).
+  - 117 generic massing models: footprints traced from the souvenir map (or modern OSM for survivors), roof colour sampled from the map, height from sources where found and otherwise from a size class. Special shapes: Germany's Frei Otto tent (8 masts, 14–38 m), Ontario's tent, the Gyrotron pyramid and volcano, and Erickson/Massey's timber hex pyramids (Man in the Community, 140 ft).
+  - Click any building in the viewer to see its name and where its data came from.
 - **Better sources:** blocked. See "Known gaps".
 
 | Model | Map no. | Position from | Size from |
@@ -49,7 +50,8 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python tools/georef_shore_gcps.py # optional: regenerate automatic shoreline GCPs, then refit + rewarp
 .venv/bin/python tools/export_landmarks.py  # surviving-building footprints for the viewer
 .venv/bin/python tools/export_pavilions.py  # data/pavilions/placements.json -> web/public/data/pavilions.json
-cd web && npm install && npm run dev       # open /?view=<id> to jump to a pavilion, e.g. /?view=ussr
+.venv/bin/python tools/export_generic.py    # data/pavilions/generic.json -> web/public/data/generic.json (run after export_pavilions)
+cd web && npm install && npm run dev       # /?view=<id> or /?view=no<map number>, e.g. /?view=ussr, /?view=no454
 ```
 
 To add a control point:
@@ -73,5 +75,5 @@ To add a control point:
   - The LAC 1967 site blueprint and plans are only on the subscription World's Fairs database (Adam Matthew). An institutional login or a direct LAC reproduction request is needed.
 - **Position accuracy for demolished pavilions is about 20–35 m** until aerials are georeferenced.
 - **Many dimensions are estimates:** all USSR sizes except roof area, all theme-pavilion sizes, Katimavik's base, and France's fins. The research file lists archive sources (CCA fonds, Bellat's book) that would settle them.
-- **Map texture** is 1 m/px, downsampled to 4096 px, so it blurs at close range. Tiling it at 0.5 m/px is the fix.
-- **Not yet modelled:** the remaining ~80 pavilions, La Ronde, the Minirail and Expo Express, terrain, and Notre-Dame's canals as water.
+- **Generic massing is rough.** Footprints are traced by eye from an illustration (sizes there can be exaggerated). Most heights are a size class, not a source. Legend matches marked "(?)" in the fly-to list are uncertain.
+- **Not yet modelled:** La Ronde's rides beyond the Gyrotron, the Minirail and Expo Express lines, terrain, and Notre-Dame's canals as water. Smaller service buildings and kiosks are left out.

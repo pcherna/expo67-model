@@ -2,6 +2,7 @@
 // World frame: local metres from tools/common.py (MTM8 minus origin). local (x, y) -> three (x, 0, -y).
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { buildGeneric } from './generic.js';
 import { buildPavilion } from './pavilions/index.js';
 
 const WATER = 0x87c8dc;
@@ -69,6 +70,7 @@ const footprints = new THREE.Group();
 scene.add(footprints);
 const goto = document.getElementById('goto');
 const places = new Map(); // id -> {x, y, label}, for the fly-to list and ?view=<id>
+const catalogue = []; // every modelled building: {name, no, footprint|null, x, y, info}, for click-to-identify
 
 function addPlace(id, label, x, y) {
   places.set(id, { x, y, label });
@@ -100,8 +102,31 @@ async function addPavilions() {
   const recs = await (await fetch('/data/pavilions.json')).json();
   for (const rec of recs) {
     scene.add(buildPavilion(rec));
+    catalogue.push({ name: rec.name, no: rec.map_no, x: rec.x, y: rec.y, footprint: null, radius: 45, info: `Dedicated model. Position: ${rec.provenance}.` });
     addPlace(rec.id, `${rec.name}${rec.map_no ? ` (${rec.map_no})` : ''}`, rec.x, rec.y);
   }
+}
+
+async function addGeneric() {
+  const list = await (await fetch('/data/generic.json')).json();
+  scene.add(buildGeneric(list));
+  for (const b of list) {
+    catalogue.push({ name: b.name, no: b.no, footprint: b.footprint, info: `Generic massing, ${b.kind === 'tent' ? `tent on masts up to ${Math.max(...b.masts.map((m) => m[2]))} m` : `${b.h} m (${b.kind})`}. Footprint: ${b.source}.${b.uncertain ? ' Legend match uncertain.' : ''}${b.note ? ` ${b.note}.` : ''}` });
+  }
+  const grp = document.createElement('optgroup');
+  grp.label = 'Other pavilions (generic massing)';
+  for (const [i, b] of list.map((b, i) => [i, b]).sort((a, c) => (a[1].no ?? 999) - (c[1].no ?? 999))) {
+    const fp = b.footprint;
+    const id = `g${i}`;
+    const place = { x: fp.reduce((s, p) => s + p[0], 0) / fp.length, y: fp.reduce((s, p) => s + p[1], 0) / fp.length, label: b.name };
+    places.set(id, place);
+    if (b.no && !places.has(`no${b.no}`)) places.set(`no${b.no}`, place); // ?view=no454 jumps to a map number
+    const opt = document.createElement('option');
+    opt.value = id;
+    opt.textContent = `${b.no ? `${b.no} ` : ''}${b.name}${b.uncertain ? ' (?)' : ''}`;
+    grp.appendChild(opt);
+  }
+  goto.appendChild(grp);
 }
 
 goto.addEventListener('change', () => flyTo(goto.value));
@@ -109,15 +134,55 @@ document.getElementById('toggle-footprints').addEventListener('change', (e) => {
   footprints.visible = e.target.checked;
 });
 
-await Promise.all([addMapPanel('islands', 0), addMapPanel('havre', 0.05), addLandmarks(), addPavilions()]);
+await Promise.all([addMapPanel('islands', 0), addMapPanel('havre', 0.05), addLandmarks(), addPavilions(), addGeneric()]);
 document.getElementById('georef-info').textContent = georefInfo.join(' · ');
 const view = new URLSearchParams(location.search).get('view');
 if (view) flyTo(view);
+// ?pick=x,y (CSS px) simulates a click once rendered: used by headless checks.
+const pick = new URLSearchParams(location.search).get('pick');
+if (pick) {
+  const [px, py] = pick.split(',').map(Number);
+  setTimeout(() => {
+    for (const type of ['pointerdown', 'pointerup']) renderer.domElement.dispatchEvent(new PointerEvent(type, { clientX: px, clientY: py }));
+    console.log(`[pick] ${document.getElementById('picked').textContent || '(nothing)'}`);
+  }, 500);
+}
 
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// Click a building (or near a dedicated model) to identify it.
+function insideFp(fp, x, y) {
+  let c = false;
+  for (let i = 0, j = fp.length - 1; i < fp.length; j = i++) {
+    const [xi, yi] = fp[i];
+    const [xj, yj] = fp[j];
+    if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) c = !c;
+  }
+  return c;
+}
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+let downAt = null;
+renderer.domElement.addEventListener('pointerdown', (e) => (downAt = [e.clientX, e.clientY]));
+renderer.domElement.addEventListener('pointerup', (e) => {
+  if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 4) return; // a drag, not a click
+  pointer.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
+  raycaster.setFromCamera(pointer, camera);
+  const hit = raycaster.intersectObjects(scene.children, true).find((h) => h.object !== water && h.object.type === 'Mesh');
+  const el = document.getElementById('picked');
+  if (!hit) return (el.textContent = '');
+  const x = hit.point.x;
+  const y = -hit.point.z;
+  let best = catalogue.find((b) => b.footprint && insideFp(b.footprint, x, y));
+  if (!best) {
+    const near = catalogue.filter((b) => !b.footprint).map((b) => [Math.hypot(b.x - x, b.y - y), b]).sort((a, b) => a[0] - b[0])[0];
+    if (near && near[0] < near[1].radius) best = near[1];
+  }
+  el.innerHTML = best ? `<strong>${best.no ? `${best.no} · ` : ''}${best.name}</strong><br>${best.info}` : '';
 });
 
 let statsShown = false;
@@ -127,7 +192,7 @@ renderer.setAnimationLoop(() => {
   if (!statsShown) {
     statsShown = true;
     const { triangles, calls } = renderer.info.render;
-    const msg = `${places.size} models · ${(triangles / 1000).toFixed(0)}k triangles · ${calls} draw calls`;
+    const msg = `${catalogue.length} buildings · ${(triangles / 1000).toFixed(0)}k triangles · ${calls} draw calls`;
     document.getElementById('stats').textContent = msg;
     console.log(`[stats] ${msg}`);
   }

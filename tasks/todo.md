@@ -21,6 +21,14 @@
 - [x] Man the Explorer (320): 3 hexagonal halls with a truncated-tetrahedron lattice. DuPont auditorium (330) not modelled.
 - [x] Man the Producer (440): 3 sections
 
+## Step 5: Whole-site coverage
+- [x] Map texture at 0.5 m/px in 2048 px tiles
+- [x] Legend OCR (tesseract) for names; 117 generic footprints traced or taken from OSM
+- [x] Special generic kinds: tent (Germany, Ontario), pyramid/cone (Gyrotron), hex timber pyramid (Man in the Community)
+- [x] Click-to-identify with provenance; ?view=no<number>
+- [ ] Minirail and Expo Express lines
+- [ ] Notre-Dame canals and lagoons as real water
+
 ## Domain rules found mid-build
 - The souvenir map has 3 panels. Ste-Hélène and Notre-Dame share one geometry. Cité du Havre is drawn displaced.
 - Building art is slightly oblique, so the drawn roof sits north-west of the true footprint in map terms. Weight building GCPs lower than ground-level ones.

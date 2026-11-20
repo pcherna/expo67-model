@@ -1,0 +1,1401 @@
+{
+ "notes": "Generic massing ('tier C') for pavilions without a dedicated builder. Footprints traced by eye from gridded crops of the 1967 souvenir map (source pixels): rect [x0,y0,x1,y1], poly [[x,y],...], or circle [cx,cy,r]. Map art is drawn slightly oblique and sizes can be exaggerated, so treat these as rough. Height: explicit 'h' (m) when known, otherwise a size class in tools/export_generic.py. Roof colour is sampled from the map inside the footprint. 'uncertain' marks a doubtful legend match.",
+ "buildings": [
+  {
+   "no": 310,
+   "name": "Netherlands",
+   "panel": "islands",
+   "rect": [
+    5185,
+    1910,
+    5345,
+    2010
+   ],
+   "note": "aluminium space-frame cube"
+  },
+  {
+   "no": 311,
+   "name": "Belgium",
+   "panel": "islands",
+   "rect": [
+    5260,
+    2000,
+    5395,
+    2105
+   ]
+  },
+  {
+   "no": 312,
+   "name": "Switzerland",
+   "panel": "islands",
+   "rect": [
+    5372,
+    2052,
+    5428,
+    2125
+   ]
+  },
+  {
+   "no": 312,
+   "name": "Switzerland (hall)",
+   "panel": "islands",
+   "rect": [
+    5300,
+    2105,
+    5425,
+    2180
+   ],
+   "uncertain": true
+  },
+  {
+   "no": 313,
+   "name": "Austria",
+   "panel": "islands",
+   "rect": [
+    5310,
+    2180,
+    5450,
+    2280
+   ],
+   "note": "crystalline faceted roofs"
+  },
+  {
+   "no": 317,
+   "name": "Expo-Services E",
+   "panel": "islands",
+   "rect": [
+    5440,
+    1985,
+    5490,
+    2045
+   ]
+  },
+  {
+   "no": 325,
+   "name": "Japan",
+   "panel": "islands",
+   "rect": [
+    5450,
+    1870,
+    5615,
+    1945
+   ]
+  },
+  {
+   "no": 326,
+   "name": "State of Vermont",
+   "panel": "islands",
+   "rect": [
+    5545,
+    1925,
+    5630,
+    2015
+   ]
+  },
+  {
+   "no": 327,
+   "name": "Brewers Pavilion (east drum)",
+   "panel": "islands",
+   "circle": [
+    5635,
+    2035,
+    28
+   ]
+  },
+  {
+   "no": 327,
+   "name": "Brewers Pavilion (west drum)",
+   "panel": "islands",
+   "circle": [
+    5668,
+    2088,
+    28
+   ]
+  },
+  {
+   "no": 328,
+   "name": "Republic of China",
+   "panel": "islands",
+   "rect": [
+    5630,
+    2140,
+    5705,
+    2220
+   ]
+  },
+  {
+   "no": 318,
+   "name": "Iran",
+   "panel": "islands",
+   "rect": [
+    5500,
+    2210,
+    5610,
+    2330
+   ]
+  },
+  {
+   "no": 340,
+   "name": "Expo Post Office",
+   "panel": "islands",
+   "rect": [
+    5745,
+    2240,
+    5795,
+    2285
+   ]
+  },
+  {
+   "no": 319,
+   "name": "Telephone Pavilion",
+   "panel": "islands",
+   "rect": [
+    5440,
+    2300,
+    5650,
+    2410
+   ]
+  },
+  {
+   "no": 316,
+   "name": "Scandinavia",
+   "panel": "islands",
+   "rect": [
+    5215,
+    2505,
+    5385,
+    2670
+   ]
+  },
+  {
+   "no": 330,
+   "name": "DuPont of Canada Auditorium",
+   "panel": "islands",
+   "poly": [
+    [
+     5670,
+     2466
+    ],
+    [
+     5695,
+     2532
+    ],
+    [
+     5655,
+     2585
+    ],
+    [
+     5625,
+     2575
+    ]
+   ],
+   "uncertain": true,
+   "note": "triangle between labels 330 and 331 (Polymer)"
+  },
+  {
+   "no": 332,
+   "name": "Air Canada",
+   "panel": "islands",
+   "circle": [
+    5744,
+    2490,
+    28
+   ]
+  },
+  {
+   "no": 333,
+   "name": "State of Maine",
+   "panel": "islands",
+   "rect": [
+    5707,
+    2528,
+    5763,
+    2607
+   ]
+  },
+  {
+   "no": 346,
+   "name": "New York State",
+   "panel": "islands",
+   "circle": [
+    5823,
+    2578,
+    32
+   ]
+  },
+  {
+   "no": 341,
+   "name": "Québec Liquor Board Store",
+   "panel": "islands",
+   "rect": [
+    5800,
+    2320,
+    5880,
+    2390
+   ]
+  },
+  {
+   "no": 348,
+   "name": "Visitors' Aid Centre",
+   "panel": "islands",
+   "rect": [
+    5753,
+    2654,
+    5832,
+    2752
+   ]
+  },
+  {
+   "no": 349,
+   "name": "Expo Banking Service",
+   "panel": "islands",
+   "circle": [
+    5872,
+    2730,
+    25
+   ]
+  },
+  {
+   "no": 336,
+   "name": "Operations Control Centre",
+   "panel": "islands",
+   "rect": [
+    5651,
+    2640,
+    5740,
+    2728
+   ]
+  },
+  {
+   "no": 409,
+   "name": "Atlantic Provinces",
+   "panel": "islands",
+   "rect": [
+    4105,
+    3060,
+    4198,
+    3185
+   ]
+  },
+  {
+   "no": 414,
+   "name": "Indians of Canada",
+   "panel": "islands",
+   "rect": [
+    4220,
+    3050,
+    4305,
+    3183
+   ],
+   "note": "tepee-like tower on the map"
+  },
+  {
+   "no": 415,
+   "name": "United Nations",
+   "panel": "islands",
+   "rect": [
+    4310,
+    3045,
+    4383,
+    3183
+   ]
+  },
+  {
+   "no": 416,
+   "name": "Christian Pavilion",
+   "panel": "islands",
+   "rect": [
+    4408,
+    3050,
+    4477,
+    3173
+   ]
+  },
+  {
+   "no": 417,
+   "name": "Greece",
+   "panel": "islands",
+   "rect": [
+    4487,
+    3050,
+    4571,
+    3178
+   ]
+  },
+  {
+   "no": 419,
+   "name": "Mauritius",
+   "panel": "islands",
+   "rect": [
+    4413,
+    3262,
+    4457,
+    3346
+   ]
+  },
+  {
+   "no": 420,
+   "name": "OECD",
+   "panel": "islands",
+   "rect": [
+    4477,
+    3281,
+    4522,
+    3346
+   ],
+   "uncertain": true
+  },
+  {
+   "no": 422,
+   "name": "Monaco",
+   "panel": "islands",
+   "rect": [
+    4304,
+    3336,
+    4349,
+    3405
+   ]
+  },
+  {
+   "no": 423,
+   "name": "Haiti",
+   "panel": "islands",
+   "rect": [
+    4304,
+    3425,
+    4368,
+    3474
+   ]
+  },
+  {
+   "no": 424,
+   "name": "Yugoslavia",
+   "panel": "islands",
+   "rect": [
+    4408,
+    3375,
+    4516,
+    3474
+   ]
+  },
+  {
+   "no": 410,
+   "name": "Western Provinces",
+   "panel": "islands",
+   "circle": [
+    4235,
+    3454,
+    35
+   ]
+  },
+  {
+   "no": 407,
+   "name": "Ontario",
+   "panel": "islands",
+   "rect": [
+    3880,
+    3455,
+    4055,
+    3690
+   ],
+   "kind": "tent",
+   "masts": [
+    [
+     3925,
+     3520,
+     18
+    ],
+    [
+     3990,
+     3560,
+     22
+    ],
+    [
+     3960,
+     3640,
+     16
+    ],
+    [
+     4030,
+     3500,
+     14
+    ],
+    [
+     4020,
+     3640,
+     12
+    ]
+   ],
+   "note": "Ontario's tent roof; mast heights estimated"
+  },
+  {
+   "no": 408,
+   "name": "Québec",
+   "panel": "islands",
+   "rect": [
+    4135,
+    3581,
+    4234,
+    3721
+   ],
+   "note": "survives as part of the Casino"
+  },
+  {
+   "no": 435,
+   "name": "Great Britain",
+   "panel": "islands",
+   "rect": [
+    4581,
+    3562,
+    4798,
+    3804
+   ],
+   "h": 36.6,
+   "note": "main structure ~120 ft to flat roof (Building with Steel, 1967)"
+  },
+  {
+   "no": 435,
+   "name": "Great Britain (tower)",
+   "panel": "islands",
+   "rect": [
+    4702,
+    3638,
+    4753,
+    3778
+   ],
+   "h": 61,
+   "note": "200 ft tower (Canmore; National Archives blog)"
+  },
+  {
+   "no": 430,
+   "name": "Israel",
+   "panel": "islands",
+   "rect": [
+    4650,
+    3056,
+    4790,
+    3188
+   ]
+  },
+  {
+   "no": 431,
+   "name": "Trinidad & Tobago and Grenada",
+   "panel": "islands",
+   "rect": [
+    4721,
+    3268,
+    4783,
+    3347
+   ]
+  },
+  {
+   "no": 442,
+   "name": "Italy",
+   "panel": "islands",
+   "rect": [
+    5047,
+    3153,
+    5224,
+    3294
+   ]
+  },
+  {
+   "no": 443,
+   "name": "Czechoslovakia",
+   "panel": "islands",
+   "rect": [
+    5321,
+    3235,
+    5443,
+    3352
+   ]
+  },
+  {
+   "no": 444,
+   "name": "Canadian National",
+   "panel": "islands",
+   "rect": [
+    5090,
+    3330,
+    5170,
+    3460
+   ],
+   "uncertain": true
+  },
+  {
+   "no": 445,
+   "name": "Canadian Kodak",
+   "panel": "islands",
+   "rect": [
+    5180,
+    3380,
+    5290,
+    3460
+   ],
+   "uncertain": true
+  },
+  {
+   "no": 447,
+   "name": "Cuba",
+   "panel": "islands",
+   "rect": [
+    5040,
+    3470,
+    5110,
+    3600
+   ]
+  },
+  {
+   "no": 448,
+   "name": "Economic Progress Pavilion",
+   "panel": "islands",
+   "circle": [
+    5150,
+    3552,
+    45
+   ]
+  },
+  {
+   "no": 449,
+   "name": "Chatelaine Magazine",
+   "panel": "islands",
+   "rect": [
+    5205,
+    3505,
+    5255,
+    3570
+   ]
+  },
+  {
+   "no": 450,
+   "name": "Expo Banking Service",
+   "panel": "islands",
+   "circle": [
+    5290,
+    3570,
+    32
+   ]
+  },
+  {
+   "no": 451,
+   "name": "European Communities",
+   "panel": "islands",
+   "rect": [
+    5035,
+    3620,
+    5170,
+    3705
+   ]
+  },
+  {
+   "no": 452,
+   "name": "Guyana and Barbados",
+   "panel": "islands",
+   "rect": [
+    5175,
+    3675,
+    5220,
+    3730
+   ]
+  },
+  {
+   "no": 453,
+   "name": "Ceylon",
+   "panel": "islands",
+   "rect": [
+    5220,
+    3675,
+    5280,
+    3745
+   ]
+  },
+  {
+   "no": 454,
+   "name": "Federal Republic of Germany",
+   "panel": "islands",
+   "poly": [
+    [
+     4860,
+     3830
+    ],
+    [
+     4950,
+     3770
+    ],
+    [
+     5050,
+     3765
+    ],
+    [
+     5150,
+     3790
+    ],
+    [
+     5160,
+     3900
+    ],
+    [
+     5110,
+     3975
+    ],
+    [
+     4990,
+     3985
+    ],
+    [
+     4900,
+     3940
+    ],
+    [
+     4855,
+     3880
+    ]
+   ],
+   "kind": "tent",
+   "masts": [
+    [
+     5015,
+     3790,
+     38
+    ],
+    [
+     5085,
+     3855,
+     30
+    ],
+    [
+     4935,
+     3830,
+     22
+    ],
+    [
+     5120,
+     3900,
+     20
+    ],
+    [
+     4990,
+     3900,
+     26
+    ],
+    [
+     4890,
+     3870,
+     16
+    ],
+    [
+     5060,
+     3950,
+     18
+    ],
+    [
+     4960,
+     3960,
+     14
+    ]
+   ],
+   "note": "Frei Otto cable net: 8 masts 14-38 m (Structurae); mast positions read from the map, heights assigned within that range"
+  },
+  {
+   "no": 456,
+   "name": "Australia",
+   "panel": "islands",
+   "rect": [
+    5155,
+    3800,
+    5280,
+    3940
+   ]
+  },
+  {
+   "no": 464,
+   "name": "India",
+   "panel": "islands",
+   "rect": [
+    5355,
+    3770,
+    5480,
+    3930
+   ]
+  },
+  {
+   "no": 465,
+   "name": "Mexico",
+   "panel": "islands",
+   "rect": [
+    5505,
+    3755,
+    5630,
+    3930
+   ]
+  },
+  {
+   "no": 460,
+   "name": "Venezuela",
+   "panel": "islands",
+   "rect": [
+    5510,
+    3277,
+    5624,
+    3384
+   ],
+   "note": "three coloured cubes"
+  },
+  {
+   "no": 466,
+   "name": "Ethiopia",
+   "panel": "islands",
+   "rect": [
+    5683,
+    3293,
+    5725,
+    3394
+   ]
+  },
+  {
+   "no": 467,
+   "name": "Morocco",
+   "panel": "islands",
+   "rect": [
+    5736,
+    3330,
+    5800,
+    3400
+   ]
+  },
+  {
+   "no": 462,
+   "name": "Place d'Afrique",
+   "panel": "islands",
+   "rect": [
+    5438,
+    3448,
+    5667,
+    3660
+   ],
+   "note": "cluster of African pavilions under pyramidal roofs"
+  },
+  {
+   "no": 469,
+   "name": "Algeria, Kuwait, United Arab Republic",
+   "panel": "islands",
+   "rect": [
+    5768,
+    3490,
+    5916,
+    3602
+   ]
+  },
+  {
+   "no": 470,
+   "name": "Thailand",
+   "panel": "islands",
+   "rect": [
+    5693,
+    3607,
+    5736,
+    3703
+   ]
+  },
+  {
+   "no": 471,
+   "name": "Burma",
+   "panel": "islands",
+   "rect": [
+    5800,
+    3628,
+    5853,
+    3703
+   ]
+  },
+  {
+   "no": 474,
+   "name": "Kaleidoscope",
+   "panel": "islands",
+   "rect": [
+    5932,
+    3490,
+    6033,
+    3554
+   ]
+  },
+  {
+   "no": 473,
+   "name": "Sermons from Science",
+   "panel": "islands",
+   "rect": [
+    5960,
+    3660,
+    6090,
+    3700
+   ],
+   "uncertain": true
+  },
+  {
+   "no": 475,
+   "name": "Jewish Pavilion",
+   "panel": "islands",
+   "rect": [
+    6090,
+    3615,
+    6135,
+    3690
+   ],
+   "uncertain": true
+  },
+  {
+   "no": 478,
+   "name": "Canadian Pacific Cominco",
+   "panel": "islands",
+   "circle": [
+    6087,
+    3735,
+    42
+   ]
+  },
+  {
+   "no": 482,
+   "name": "Canadian Pulp and Paper Industry",
+   "panel": "islands",
+   "rect": [
+    6150,
+    3665,
+    6250,
+    3775
+   ]
+  },
+  {
+   "no": 483,
+   "name": "Steel Pavilion",
+   "panel": "islands",
+   "rect": [
+    6245,
+    3620,
+    6340,
+    3760
+   ]
+  },
+  {
+   "no": 480,
+   "name": "Man the Provider (block 1)",
+   "panel": "islands",
+   "rect": [
+    6570,
+    3300,
+    6630,
+    3365
+   ]
+  },
+  {
+   "no": 480,
+   "name": "Man the Provider (block 2)",
+   "panel": "islands",
+   "rect": [
+    6640,
+    3335,
+    6720,
+    3370
+   ]
+  },
+  {
+   "no": 480,
+   "name": "Man the Provider (block 3)",
+   "panel": "islands",
+   "rect": [
+    6760,
+    3300,
+    6812,
+    3350
+   ]
+  },
+  {
+   "no": 480,
+   "name": "Man the Provider (block 4)",
+   "panel": "islands",
+   "rect": [
+    6745,
+    3383,
+    6797,
+    3418
+   ]
+  },
+  {
+   "no": 480,
+   "name": "Man the Provider (block 5)",
+   "panel": "islands",
+   "rect": [
+    6747,
+    3415,
+    6833,
+    3460
+   ]
+  },
+  {
+   "no": 480,
+   "name": "Man the Provider (block 6)",
+   "panel": "islands",
+   "rect": [
+    6750,
+    3475,
+    6810,
+    3510
+   ]
+  },
+  {
+   "no": 480,
+   "name": "Man the Provider (block 7)",
+   "panel": "islands",
+   "rect": [
+    6945,
+    3385,
+    6983,
+    3430
+   ]
+  },
+  {
+   "no": 480,
+   "name": "Man the Provider (block 8)",
+   "panel": "islands",
+   "rect": [
+    6570,
+    3565,
+    6670,
+    3610
+   ]
+  },
+  {
+   "no": 480,
+   "name": "Man the Provider (wheel)",
+   "panel": "islands",
+   "circle": [
+    6615,
+    3465,
+    68
+   ]
+  },
+  {
+   "no": 480,
+   "name": "Man the Provider (main hall)",
+   "panel": "islands",
+   "poly": [
+    [
+     6850,
+     3265
+    ],
+    [
+     6945,
+     3300
+    ],
+    [
+     6960,
+     3440
+    ],
+    [
+     6990,
+     3510
+    ],
+    [
+     6820,
+     3515
+    ],
+    [
+     6820,
+     3400
+    ]
+   ]
+  },
+  {
+   "no": 485,
+   "name": "Electrical Substation",
+   "panel": "islands",
+   "rect": [
+    6690,
+    3280,
+    6760,
+    3330
+   ]
+  },
+  {
+   "no": 488,
+   "name": "Minirail Maintenance Yard",
+   "panel": "islands",
+   "rect": [
+    7115,
+    3410,
+    7200,
+    3550
+   ],
+   "h": 6
+  },
+  {
+   "no": 490,
+   "name": "Notre-Dame Public Safety",
+   "panel": "islands",
+   "rect": [
+    6920,
+    3590,
+    6995,
+    3640
+   ]
+  },
+  {
+   "no": 512,
+   "name": "Alcan Pavilion (Montreal Aquarium)",
+   "panel": "islands",
+   "circle": [
+    8018,
+    1730,
+    38
+   ]
+  },
+  {
+   "no": 511,
+   "name": "Alcan Pavilion (Dolphin Pool)",
+   "panel": "islands",
+   "rect": [
+    8075,
+    1775,
+    8175,
+    1840
+   ]
+  },
+  {
+   "no": 524,
+   "name": "Fort Edmonton Pioneerland",
+   "panel": "islands",
+   "rect": [
+    8175,
+    1980,
+    8355,
+    2125
+   ],
+   "h": 8
+  },
+  {
+   "no": 526,
+   "name": "Timberland",
+   "panel": "islands",
+   "rect": [
+    8350,
+    2030,
+    8495,
+    2125
+   ],
+   "h": 10
+  },
+  {
+   "no": 513,
+   "name": "Expo-Express station La Ronde",
+   "panel": "islands",
+   "rect": [
+    8025,
+    2020,
+    8075,
+    2130
+   ],
+   "h": 8
+  },
+  {
+   "no": 529,
+   "name": "Youth Pavilion",
+   "panel": "islands",
+   "rect": [
+    8235,
+    2413,
+    8380,
+    2578
+   ],
+   "h": 12.2,
+   "note": "McGill lot record D-529: 200 ft diameter, 40 ft to top of mechanical loft"
+  },
+  {
+   "no": 520,
+   "name": "La Ronde Public Safety and Administration",
+   "panel": "islands",
+   "rect": [
+    8150,
+    2493,
+    8193,
+    2583
+   ]
+  },
+  {
+   "no": 535,
+   "name": "Gyrotron (pyramid)",
+   "panel": "islands",
+   "rect": [
+    8523,
+    2300,
+    8651,
+    2508
+   ],
+   "kind": "pyramid",
+   "h": 35,
+   "note": "height not found; estimate. Largest structure on La Ronde (McGill)"
+  },
+  {
+   "no": 535,
+   "name": "Gyrotron (volcano)",
+   "panel": "islands",
+   "rect": [
+    8406,
+    2391,
+    8523,
+    2508
+   ],
+   "kind": "cone",
+   "h": 20,
+   "note": "height not found; estimate"
+  },
+  {
+   "no": 536,
+   "name": "Rides Centre Maintenance",
+   "panel": "islands",
+   "rect": [
+    8417,
+    2519,
+    8502,
+    2573
+   ]
+  },
+  {
+   "no": 546,
+   "name": "Laterna Magika",
+   "panel": "islands",
+   "rect": [
+    8573,
+    2109,
+    8653,
+    2183
+   ]
+  },
+  {
+   "no": 548,
+   "name": "Marina Maintenance",
+   "panel": "islands",
+   "rect": [
+    8557,
+    2540,
+    8594,
+    2578
+   ]
+  },
+  {
+   "no": 201,
+   "name": "Place d'Accueil",
+   "panel": "havre",
+   "rect": [
+    700,
+    415,
+    900,
+    595
+   ],
+   "note": "entrance plaza under hexagonal canopies"
+  },
+  {
+   "no": 207,
+   "name": "International Broadcasting Centre (CBC)",
+   "panel": "havre",
+   "rect": [
+    735,
+    675,
+    945,
+    840
+   ]
+  },
+  {
+   "no": 210,
+   "name": "Art Gallery",
+   "panel": "havre",
+   "rect": [
+    1080,
+    622,
+    1215,
+    772
+   ]
+  },
+  {
+   "no": 211,
+   "name": "Photography / Industrial Design",
+   "panel": "havre",
+   "rect": [
+    1253,
+    577,
+    1395,
+    682
+   ],
+   "uncertain": true
+  },
+  {
+   "no": 215,
+   "name": "Expo-Théâtre",
+   "panel": "havre",
+   "rect": [
+    1178,
+    840,
+    1350,
+    1035
+   ]
+  },
+  {
+   "no": 216,
+   "name": "Jeunesses musicales du Canada",
+   "panel": "havre",
+   "rect": [
+    1350,
+    720,
+    1440,
+    787
+   ],
+   "uncertain": true
+  },
+  {
+   "no": 217,
+   "name": "Hospitality Pavilion",
+   "panel": "havre",
+   "rect": [
+    1418,
+    795,
+    1500,
+    855
+   ]
+  },
+  {
+   "no": 220,
+   "name": "Cité du Havre Public Safety",
+   "panel": "havre",
+   "rect": [
+    1465,
+    590,
+    1531,
+    670
+   ]
+  },
+  {
+   "no": 223,
+   "name": "International Trade Centre / Expo Club",
+   "panel": "havre",
+   "rect": [
+    1575,
+    795,
+    1663,
+    935
+   ]
+  },
+  {
+   "no": 225,
+   "name": "Québec Industries",
+   "panel": "havre",
+   "rect": [
+    1759,
+    729,
+    1899,
+    898
+   ]
+  },
+  {
+   "no": 228,
+   "name": "Pavilion 228",
+   "panel": "havre",
+   "rect": [
+    1957,
+    590,
+    2112,
+    700
+   ],
+   "uncertain": true,
+   "note": "number read off the map; not in the legend scan"
+  },
+  {
+   "no": 239,
+   "name": "Labyrinth (NFB)",
+   "panel": "havre",
+   "rect": [
+    2180,
+    720,
+    2275,
+    865
+   ]
+  },
+  {
+   "no": 240,
+   "name": "Man in the Community",
+   "panel": "havre",
+   "circle": [
+    2425,
+    680,
+    85
+   ],
+   "kind": "hexpyramid",
+   "h": 42.7,
+   "note": "Erickson/Massey timber hex ziggurat: 140 ft peak, 285 ft base (McGill eScholarship); FAO: 38 m above first hexagon"
+  },
+  {
+   "no": 240,
+   "name": "Man and His Health",
+   "panel": "havre",
+   "circle": [
+    2380,
+    800,
+    60
+   ],
+   "kind": "hexpyramid",
+   "h": 30,
+   "uncertain": true,
+   "note": "second, smaller hex pyramid next to 240; height scaled, estimate"
+  }
+ ],
+ "osm_survivors": [
+  {
+   "osm": "way/46866695",
+   "name": "Canada pavilion block (406)",
+   "h": 12
+  },
+  {
+   "osm": "way/433151288",
+   "name": "Jamaica (418)",
+   "h": 7
+  },
+  {
+   "osm": "way/46866700",
+   "name": "Tunisia (468)",
+   "h": 8
+  },
+  {
+   "osm": "way/310084402",
+   "name": "Korea (347)",
+   "h": 7
+  },
+  {
+   "osm": "way/115813650",
+   "name": "Fort Sainte-Hélène (503)",
+   "h": 9
+  },
+  {
+   "osm": "way/381556755",
+   "name": "La Poudrière (373)",
+   "h": 8
+  },
+  {
+   "osm": "way/433277863",
+   "name": "Tour de Lévis (367)",
+   "h": 30,
+   "note": "height estimate"
+  },
+  {
+   "osm": "way/82141843",
+   "name": "Hélène-de-Champlain (365)",
+   "h": 10
+  },
+  {
+   "osm": "way/47175204",
+   "name": "Administration and News Pavilion (208)",
+   "h": 15
+  },
+  {
+   "osm": "way/36807079",
+   "name": "Jardin des étoiles (545)",
+   "h": 8
+  }
+ ]
+}
