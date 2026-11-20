@@ -4,6 +4,7 @@
 |---|---|---|---|
 | `maps/souvenir_map_10k.jpg` | Official Souvenir Map of Expo 67, cleaned and rejoined scan, 10200×4563 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Plan_souvenir_officiel_Expo_67_(recompos%C3%A9).jpg). A 20400×9125 "ultraHD" version also exists there. | CC BY 2.5 CA. Credit: Compagnie canadienne de l'Exposition internationale de 1967 |
 | `maps/thoroe_site_map.png` | Modern simplified map of 20 pavilions | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Montr%C3%A9al_Expo_67_Site_Map.png) | CC BY-SA 2.0, Thoroe |
+| `aerials/index_1966.csv`, `aerials/index_1969.csv` | Indexes of the city's vertical aerial photos (1966: 449 rows, 1969: 235 rows), each row linking a 300 dpi TIFF | [Données Québec: vues aériennes 1958–1975](https://www.donneesquebec.ca/recherche/dataset/vmtl-vues-aeriennes-de-montreal-1958-1975). The image server returned 403 "maintenance" on 2026-11-19. | CC BY-NC-SA. Credit: Archives de la Ville de Montréal |
 | `../data/osm/*_raw.json` | Modern geometry of the islands, bridges, buildings and roads | OpenStreetMap via the Overpass API, fetched 2026-11-19 | ODbL. Credit: © OpenStreetMap contributors |
 
 ## Candidate sources not yet used
