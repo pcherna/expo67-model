@@ -49,19 +49,19 @@ const georefInfo = [];
 
 async function addMapPanel(name, lift) {
   const b = await (await fetch(`/georef/${name}.json`)).json();
-  const tex = await loader.loadAsync(`/georef/${name}.webp`);
-  tex.colorSpace = THREE.SRGBColorSpace;
-  tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
-  const w = b.xmax - b.xmin;
-  const h = b.ymax - b.ymin;
-  const plane = new THREE.Mesh(
-    new THREE.PlaneGeometry(w, h),
-    new THREE.MeshLambertMaterial({ map: tex, transparent: true, alphaTest: 0.5 }),
-  );
-  plane.rotation.x = -Math.PI / 2;
-  plane.position.copy(toWorld((b.xmin + b.xmax) / 2, (b.ymin + b.ymax) / 2, lift));
-  plane.receiveShadow = true;
-  scene.add(plane);
+  await Promise.all(b.tiles.map(async (t) => {
+    const tex = await loader.loadAsync(`/georef/${t.file}`);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    const plane = new THREE.Mesh(
+      new THREE.PlaneGeometry(t.xmax - t.xmin, t.ymax - t.ymin),
+      new THREE.MeshLambertMaterial({ map: tex, transparent: true, alphaTest: 0.5 }),
+    );
+    plane.rotation.x = -Math.PI / 2;
+    plane.position.copy(toWorld((t.xmin + t.xmax) / 2, (t.ymin + t.ymax) / 2, lift));
+    plane.receiveShadow = true;
+    scene.add(plane);
+  }));
   georefInfo.push(`${name}: ${b.model}, ${b.n_gcps} hand + ${b.n_shore} shore GCPs, held-out error ${b.loocv_m} m`);
 }
 

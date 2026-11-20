@@ -6,8 +6,8 @@ displaced Cité du Havre drawing does not bleed into the islands warp and vice v
 Outputs per panel:
   data/georef/<panel>_warped.png      RGBA map resampled to local metres, north up
   data/georef/<panel>_overlay.jpg     same, with modern OSM outlines on top (QA)
-  web/public/georef/<panel>.webp      web texture, longest side <= 4096 px
-  web/public/georef/<panel>.json      bounds {xmin,xmax,ymin,ymax} in local metres for the ground plane
+  web/public/georef/<panel>/r<row>_c<col>.webp   web texture tiles of TILE px (fully transparent tiles skipped)
+  web/public/georef/<panel>.json      bounds + tile list in local metres for the ground planes
 Usage: .venv/bin/python tools/georef_warp.py [--mpp 0.5] [--panel islands]
 """
 import argparse
@@ -36,7 +36,7 @@ LABEL_BOXES = [
     (2670, 980, 3040, 1110),   # CITE DU HAVRE
     (8800, 150, 10000, 560),   # expo67 logo
 ]
-WEB_MAX = 4096
+TILE = 2048  # px per web tile side (safe on mobile GPUs)
 GRID = 8  # evaluate the (possibly TPS) inverse transform every GRID output pixels, interpolate between
 WEB_DIR = ROOT / "web" / "public" / "georef"
 
@@ -89,10 +89,27 @@ def main():
 
         bounds = {"xmin": xmin, "xmax": xmax, "ymin": ymin, "ymax": ymax, "model": info["model"], "rms_m": info["rms_m"], "loocv_m": info["loocv_m"],
                   "n_gcps": info["n_manual"], "n_shore": info["n_shore"]}
-        s = min(1.0, WEB_MAX / max(W, H))
-        web = warped.resize((round(W * s), round(H * s)), Image.LANCZOS) if s < 1 else warped
-        web.save(WEB_DIR / f"{panel}.webp", quality=82, method=6)
+        tdir = WEB_DIR / panel
+        tdir.mkdir(parents=True, exist_ok=True)
+        for f in tdir.glob("*.webp"):
+            f.unlink()
+        tiles = []
+        alpha = np.asarray(warped.getchannel("A"))
+        for r in range(0, H, TILE):
+            for c in range(0, W, TILE):
+                if not alpha[r:r + TILE, c:c + TILE].any():
+                    continue
+                name = f"r{r // TILE}_c{c // TILE}.webp"
+                tile = warped.crop((c, r, min(c + TILE, W), min(r + TILE, H)))
+                tile.save(tdir / name, quality=80, method=6)
+                tiles.append({"file": f"{panel}/{name}", "xmin": xmin + c * mpp, "xmax": xmin + (c + tile.width) * mpp,
+                              "ymax": ymax - r * mpp, "ymin": ymax - (r + tile.height) * mpp})
+        bounds["mpp"] = mpp
+        bounds["tiles"] = tiles
         (WEB_DIR / f"{panel}.json").write_text(json.dumps(bounds))
+        for old in (WEB_DIR / f"{panel}.webp",):
+            if old.exists():
+                old.unlink()
 
         ov = Image.new("RGB", (W, H), (0, 0, 0))
         ov.paste(warped, mask=warped.getchannel("A"))
@@ -107,7 +124,7 @@ def main():
             elif k == "highway" and f["properties"].get("highway") in ("motorway", "trunk", "primary", "secondary", "tertiary", "unclassified", "service"):
                 d.line(topx(c), fill=(255, 140, 0), width=1)
         ov.save(DATA / "georef" / f"{panel}_overlay.jpg", quality=85)
-        print(f"[{panel}] {W}x{H} @ {mpp} m/px, web {web.size[0]}x{web.size[1]} -> {panel}_warped.png, {panel}_overlay.jpg, web/public/georef/{panel}.webp")
+        print(f"[{panel}] {W}x{H} @ {mpp} m/px -> {panel}_warped.png, {panel}_overlay.jpg, {len(tiles)} web tiles")
 
 
 if __name__ == "__main__":
