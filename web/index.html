@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Expo 67 Model</title>
+    <title>Expo 67 — 3D Model</title>
     <style>
       html, body { margin: 0; height: 100%; background: #87c8dc; overflow: hidden; font: 13px/1.4 system-ui, sans-serif; }
       #app { position: fixed; inset: 0; }
@@ -13,12 +13,14 @@
       #hud p { margin: 4px 0; }
       #hud label { display: block; margin-top: 4px; cursor: pointer; }
       #hud select { margin-top: 6px; width: 100%; }
+      #hud .credits { margin-top: 8px; font-size: 11px; color: #4a5a66; }
+      #hud .credits a { color: inherit; }
     </style>
   </head>
   <body>
     <div id="app"></div>
     <div id="hud">
-      <h1>Expo 67 — pilot</h1>
+      <h1>Expo 67 — 3D Model</h1>
       <p>Georeferenced 1967 souvenir map on a metric ground plane. Drag to orbit, scroll to zoom, right-drag to pan. Click a building to identify it.</p>
       <p id="georef-info"></p>
       <p id="stats"></p>
@@ -26,6 +28,7 @@
       <label><input type="checkbox" id="toggle-footprints" checked /> Modern footprints of surviving buildings</label>
       <select id="goto"><option value="">Fly to…</option></select>
       <p id="picked"></p>
+      <p class="credits">Map: <a href="https://commons.wikimedia.org/wiki/File:Plan_souvenir_officiel_Expo_67_(recompos%C3%A9).jpg">Official Souvenir Map of Expo 67</a>, Compagnie canadienne de l'Exposition internationale de 1967, <a href="https://creativecommons.org/licenses/by/2.5/ca/">CC BY 2.5 CA</a>. Modern footprints: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ODbL.</p>
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>

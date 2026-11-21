@@ -35,7 +35,7 @@ Every dimension sits in a `DIMS` block at the top of its builder in `web/src/pav
 cd web && npm run build      # static site in web/dist (about 3.4 MB)
 ```
 
-Upload `web/dist` to any static host (GitHub Pages, Netlify, S3, a plain web server). Asset paths are relative, so it works from a subpath too. Touch devices get a lighter mode automatically (pixel ratio 1, smaller shadow map, no tree shadows). Add `?q=low` or `?q=high` to force a mode.
+Each push to `main` deploys the site to GitHub Pages through `.github/workflows/deploy.yml`. Or upload `web/dist` to any static host (GitHub Pages, Netlify, S3, a plain web server). Asset paths are relative, so it works from a subpath too. Touch devices get a lighter mode automatically (pixel ratio 1, smaller shadow map, no tree shadows). Add `?q=low` or `?q=high` to force a mode.
 
 Attribution required when publishing: souvenir map CC BY 2.5 CA (Compagnie canadienne de l'Exposition internationale de 1967), OpenStreetMap (ODbL). See `sources/SOURCES.md`.
 
