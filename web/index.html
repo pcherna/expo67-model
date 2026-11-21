@@ -18,6 +18,8 @@
       #hud p { margin: 4px 0; }
       #hud label { display: block; margin-top: 4px; cursor: pointer; }
       #hud select { margin-top: 6px; width: 100%; }
+      #hud .touch { display: none; }
+      @media (pointer: coarse) { #hud .touch { display: inline; } #hud .mouse { display: none; } }
       #hud .credits { margin-top: 8px; font-size: 11px; color: #4a5a66; }
       #hud .credits a { color: inherit; }
     </style>
@@ -27,7 +29,9 @@
     <div id="hud">
       <details id="hud-details" open>
       <summary><h1>Expo 67 — 3D Model</h1></summary>
-      <p>Georeferenced 1967 souvenir map on a metric ground plane. Drag to orbit, scroll to zoom, right-drag to pan. Click a building to identify it.</p>
+      <p>Georeferenced 1967 souvenir map on a metric ground plane.
+        <span class="mouse">Drag to orbit, scroll to zoom, right-drag to pan. Click a building to identify it.</span>
+        <span class="touch">Drag with one finger to orbit, pinch to zoom, drag with two fingers to pan. Tap a building to identify it.</span></p>
       <p id="georef-info"></p>
       <p id="stats"></p>
       <label><input type="checkbox" id="toggle-trees" checked /> Trees (from the map's drawn crowns)</label>
