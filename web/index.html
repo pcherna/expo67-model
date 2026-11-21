@@ -9,7 +9,12 @@
       #app { position: fixed; inset: 0; }
       #hud { position: fixed; top: 12px; left: 12px; max-width: 320px; padding: 10px 12px; border-radius: 8px;
              background: rgba(255,255,255,0.88); color: #1d2a33; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
-      #hud h1 { margin: 0 0 4px; font-size: 15px; }
+      #hud h1 { display: inline; margin: 0; font-size: 15px; }
+      #hud summary { list-style: none; cursor: pointer; margin-bottom: 4px; }
+      #hud summary::-webkit-details-marker { display: none; }
+      #hud summary::after { content: ""; float: right; width: 7px; height: 7px; margin: 5px 4px 0 16px;
+                            border: solid #4a5a66; border-width: 0 2px 2px 0; transform: rotate(-45deg); transition: transform 0.15s; }
+      #hud details[open] summary::after { transform: rotate(45deg); }
       #hud p { margin: 4px 0; }
       #hud label { display: block; margin-top: 4px; cursor: pointer; }
       #hud select { margin-top: 6px; width: 100%; }
@@ -20,16 +25,22 @@
   <body>
     <div id="app"></div>
     <div id="hud">
-      <h1>Expo 67 — 3D Model</h1>
+      <details id="hud-details" open>
+      <summary><h1>Expo 67 — 3D Model</h1></summary>
       <p>Georeferenced 1967 souvenir map on a metric ground plane. Drag to orbit, scroll to zoom, right-drag to pan. Click a building to identify it.</p>
       <p id="georef-info"></p>
       <p id="stats"></p>
       <label><input type="checkbox" id="toggle-trees" checked /> Trees (from the map's drawn crowns)</label>
       <label><input type="checkbox" id="toggle-footprints" checked /> Modern footprints of surviving buildings</label>
+      <p class="credits">Map: <a href="https://commons.wikimedia.org/wiki/File:Plan_souvenir_officiel_Expo_67_(recompos%C3%A9).jpg">Official Souvenir Map of Expo 67</a>, Compagnie canadienne de l'Exposition internationale de 1967, <a href="https://creativecommons.org/licenses/by/2.5/ca/">CC BY 2.5 CA</a>. Modern footprints: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ODbL.</p>
+      </details>
       <select id="goto"><option value="">Fly to…</option></select>
       <p id="picked"></p>
-      <p class="credits">Map: <a href="https://commons.wikimedia.org/wiki/File:Plan_souvenir_officiel_Expo_67_(recompos%C3%A9).jpg">Official Souvenir Map of Expo 67</a>, Compagnie canadienne de l'Exposition internationale de 1967, <a href="https://creativecommons.org/licenses/by/2.5/ca/">CC BY 2.5 CA</a>. Modern footprints: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ODbL.</p>
     </div>
+    <script>
+      // Start collapsed on phone-sized screens; the panel would cover much of the scene.
+      if (window.matchMedia('(max-width: 600px)').matches) document.getElementById('hud-details').open = false;
+    </script>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
